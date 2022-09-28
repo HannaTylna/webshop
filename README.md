@@ -5,6 +5,6 @@
 ## Group members:
 
     - h
-    - v
+    - Viktoria Toldi
     - m
     - y
