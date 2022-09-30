@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose"
-import Product from "@webshop/shared"
+import { Product } from "@webshop/shared"
 
 const productSchema = new Schema({
   images: Array,

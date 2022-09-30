@@ -1,14 +1,5 @@
 import { model, Schema } from "mongoose"
-import User from "@webshop/shared"
-
-// interface User {
-//   _id?: string
-//   name: string
-//   password: string
-//   mail: string
-//   telefonNumber?: number
-//   deliveryAddress?: string
-// }
+import { User } from "@webshop/shared"
 
 const userSchema = new Schema({
   _id: String,
