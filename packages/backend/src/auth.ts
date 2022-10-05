@@ -37,3 +37,5 @@ function authenticateJwtTokenMiddleware(
   console.log("req.jwt.name: #######", req.jwt.name)
   next()
 }
+
+function loginUser(req: Request, res: Response) {}
