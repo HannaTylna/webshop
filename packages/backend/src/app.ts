@@ -1,8 +1,9 @@
-import express, { Application, json, Request, Response } from "express"
 import cors from "cors"
-import { config } from "./config/db"
+import express, { Application, json, Request, Response } from "express"
 import mongoose from "mongoose"
-import { loginUser, authenticateJwtTokenMiddleware } from "./auth"
+import { config } from "./config/db"
+
+import authController from "./controllers/auth"
 
 const app: Application = express()
 app.use(cors())
@@ -13,7 +14,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Webshop 💰")
 })
 
-app.post("/loginUser", loginUser)
+app.use("/auth", authController)
 
 app.listen(config.server.port, async function () {
   await mongoose
