@@ -16,7 +16,7 @@ function createJwtToken(payload: JwtPayload): string {
   return token
 }
 
-function authenticateJwtToken(
+function authenticateJwtTokenMiddleware(
   req: JwtRequest,
   res: Response,
   next: NextFunction
