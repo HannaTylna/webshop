@@ -21,7 +21,7 @@ function authenticateJwtTokenMiddleware(
   res: Response,
   next: NextFunction
 ) {
-  const authHeader = req.header("Authorization")
+  const authHeader: string | undefined = req.header("Authorization")
   if (authHeader) {
     const token = authHeader.split(" ")[1]
     if (token) {
