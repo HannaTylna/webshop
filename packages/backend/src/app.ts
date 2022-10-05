@@ -2,6 +2,7 @@ import express, { Application, json, Request, Response } from "express"
 import cors from "cors"
 import { config } from "./config/db"
 import mongoose from "mongoose"
+import { loginUser, authenticateJwtTokenMiddleware } from "./auth"
 
 const app: Application = express()
 app.use(cors())
@@ -11,6 +12,8 @@ const port: number = parseInt(process.env.SERVER_PORT || "4001")
 app.get("/", (req: Request, res: Response) => {
   res.send("Webshop 💰")
 })
+
+app.post("/loginUser", loginUser)
 
 app.listen(config.server.port, async function () {
   await mongoose

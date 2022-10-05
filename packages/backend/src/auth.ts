@@ -16,7 +16,7 @@ function createJwtToken(payload: JwtPayload): string {
   return token
 }
 
-function authenticateJwtTokenMiddleware(
+export function authenticateJwtTokenMiddleware(
   req: JwtRequest,
   res: Response,
   next: NextFunction
@@ -38,4 +38,4 @@ function authenticateJwtTokenMiddleware(
   next()
 }
 
-function loginUser(req: Request, res: Response) {}
+export function loginUser(req: Request, res: Response) {}
