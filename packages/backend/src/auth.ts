@@ -25,7 +25,8 @@ function authenticateJwtTokenMiddleware(
   if (authHeader) {
     const token = authHeader.split(" ")[1]
     if (token) {
-      const decoded = jwt.verify(token, JWT_SECRET)
+      const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload
+      req.jwt = decoded
     } else {
       return res.sendStatus(400) // bad token
     }
@@ -33,6 +34,6 @@ function authenticateJwtTokenMiddleware(
     return res.sendStatus(401) // missing header
   }
   console.log("req.jwt.user: #######", req.jwt.user)
-  console.log("req.jwt.user: #######", req.jwt.name)
+  console.log("req.jwt.name: #######", req.jwt.name)
   next()
 }
