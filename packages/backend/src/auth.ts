@@ -26,9 +26,11 @@ function authenticateJwtTokenMiddleware(
     const token = authHeader.split(" ")[1]
     if (token) {
       const decoded = jwt.verify(token, JWT_SECRET)
+    } else {
+      return res.sendStatus(400) // bad token
     }
   } else {
-    return res.sendStatus(401)
+    return res.sendStatus(401) // missing header
   }
   console.log("req.jwt.user: #######", req.jwt.user)
   console.log("req.jwt.user: #######", req.jwt.name)
