@@ -2,6 +2,12 @@
 
 ## Development
 
+### Start backend server
+
+```
+npm run start -w backend
+```
+
 ### Install npm package to backend
 
 ```
