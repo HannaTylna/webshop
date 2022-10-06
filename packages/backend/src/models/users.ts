@@ -1,9 +1,9 @@
-import { model, Schema } from "mongoose"
+import { model, Schema, Types } from "mongoose"
 import { User } from "@webshop/shared"
 
 const userSchema = new Schema({
   _id: String,
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   mail: String,
   telefonNumber: Number,
@@ -17,6 +17,7 @@ export const getUser = async () => {
 
 export const createUser = async (user: User): Promise<User> => {
   const u = new UserModel(user)
+  u._id = new Types.ObjectId().toString()
   u.save()
   return u
 }
