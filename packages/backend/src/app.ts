@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import { config } from "./config/db"
 
 import authController from "./controllers/auth"
+import userController from "./controllers/user"
 
 const app: Application = express()
 app.use(cors())
@@ -15,6 +16,7 @@ app.get("/", (req: Request, res: Response) => {
 })
 
 app.use("/auth", authController)
+app.use("/user", userController)
 
 app.listen(config.server.port, async function () {
   await mongoose
