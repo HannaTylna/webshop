@@ -5,7 +5,7 @@ content-type: application/json
 
 {
     "name": "Kalle",
-    "password": "KallePassword"
+    "password": "Superhemligt"
 }
 
 ### Login User
@@ -15,5 +15,6 @@ content-type: application/json
 
 {
     "name": "Kalle",
-    "password": "KallePassword"
+    "password": "Superhemligt"
 }
+
