@@ -5,6 +5,6 @@ const authController: Router = express.Router()
 export function loginUser(req: Request, res: Response) {}
 
 // Login User
-authController.post("/auth", loginUser)
+authController.post("/loginUser", loginUser)
 
 export default authController
