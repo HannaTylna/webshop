@@ -17,7 +17,7 @@ export const getUser = async () => {
 
 export const createUser = async (user: User): Promise<User> => {
   const u = new UserModel(user)
-  u._id = new Types.ObjectId().toString()
+  u._id = new Types.ObjectId().toString() // https://stackoverflow.com/questions/17899750/how-can-i-generate-an-objectid-with-mongoose
   u.save()
   return u
 }
