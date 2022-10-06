@@ -4,14 +4,15 @@ import { Request, Response, NextFunction } from "express"
 const JWT_SECRET: string = "53gdjnvkjndks83opasdmvur8djcgwuf"
 
 export type JwtPayload = {
-  user: string
+  user_id: string
   name: string
+  mail: string
 }
 export interface JwtRequest extends Request {
   jwt: JwtPayload
 }
 
-function createJwtToken(payload: JwtPayload): string {
+export function createJwtToken(payload: JwtPayload): string {
   const token: string = jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" })
   return token
 }
@@ -33,7 +34,7 @@ export function authenticateJwtTokenMiddleware(
   } else {
     return res.sendStatus(401) // missing header
   }
-  console.log("req.jwt.user: #######", req.jwt.user)
+  console.log("req.jwt.user: #######", req.jwt.mail)
   console.log("req.jwt.name: #######", req.jwt.name)
   next()
 }
