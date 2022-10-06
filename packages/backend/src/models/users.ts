@@ -10,7 +10,7 @@ const userSchema = new Schema({
   deliveryAddress: String,
 })
 
-const UserModel = model<User>("User", userSchema)
+export const UserModel = model<User>("User", userSchema)
 export const getUser = async () => {
   return UserModel.find({}).exec()
 }
