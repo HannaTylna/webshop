@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express"
-import { createUser } from "../models/users"
+import { createUser, UserModel } from "../models/users"
 import { User } from "@webshop/shared"
 
 const userController: Router = express.Router()
@@ -10,8 +10,13 @@ interface CustomRequest<T> extends Request {
 export async function signUpUser(req: CustomRequest<User>, res: Response) {
   const body = req.body as User
   try {
-    let user: User = await createUser(body)
-    res.send({ user: user })
+    const exist = await UserModel.findOne({ mail: body.mail })
+    if (exist) {
+      res.send({ message: "user with this email already exists" })
+    } else {
+      let user: User = await createUser(body)
+      res.send({ user: user })
+    }
   } catch (error) {
     res
       .sendStatus(400)
