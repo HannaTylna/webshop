@@ -38,5 +38,3 @@ export function authenticateJwtTokenMiddleware(
   console.log("req.jwt.name: #######", req.jwt.name)
   next()
 }
-
-export function loginUser(req: Request, res: Response) {}
