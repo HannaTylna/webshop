@@ -13,8 +13,8 @@ export async function signUpUser(req: CustomRequest<User>, res: Response) {
     const exist = await UserModel.findOne({ mail: body.mail })
     if (exist) {
       res.send({ message: "user with this email already exists" })
-    } else if (body.mail == "") {
-      res.send({ message: "mail is required" })
+    } else if (body.mail == "" || body.name == "") {
+      res.send({ message: "both name and mail are required" })
     } else {
       let user: User = await createUser(body)
       res.send({ user: user })
