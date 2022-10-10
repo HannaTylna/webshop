@@ -11,6 +11,19 @@ content-type: application/json
     "bad": "cat"
 }
 
+### Sign Up User - after hash password
+
+POST http://localhost:4000/user/signUp
+content-type: application/json
+
+{
+    "name": "Kristi",
+    "password": "Superhemligt",
+    "mail": "kristi@gmail.com",
+    "deliveryAddress": "Okergatan 3",
+    "bad": "cat"
+}
+
 ### Login User - Bad - Missing Mail
 
 POST http://localhost:4000/auth/loginUser
