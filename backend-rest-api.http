@@ -1,0 +1,52 @@
+### Sign Up User
+
+POST http://localhost:4000/user/signUp
+content-type: application/json
+
+{
+    "name": "Kanin",
+    "password": "Superhemligt",
+    "mail": "kanin@gmail.com",
+    "deliveryAddress": "Okergatan 3",
+    "bad": "cat"
+}
+
+### Login User - Bad - Missing Mail
+
+POST http://localhost:4000/auth/loginUser
+content-type: application/json
+
+{
+    "name": "Kanin",
+    "password": "Superhemligt"
+}
+
+### Login User - OK
+
+POST http://localhost:4000/auth/loginUser
+content-type: application/json
+
+{
+    "mail": "kanin@gmail.com",
+    "password": "Superhemligt"
+}
+
+### Login User 3 - Bad - Incorrect password
+
+POST http://localhost:4000/auth/loginUser
+content-type: application/json
+
+{
+    "mail": "kanin@gmail.com",
+    "password": "BadSuperhemligt"
+}
+
+### Login User - Not Kanin mail
+
+POST http://localhost:4000/auth/loginUser
+content-type: application/json
+
+{
+    "mail": "notkanin@gmail.com",
+    "password": "Superhemligt"
+}
