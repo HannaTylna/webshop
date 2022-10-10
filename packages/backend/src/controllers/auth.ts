@@ -1,7 +1,8 @@
 import express, { Router, Request, Response } from "express"
 import { UserModel } from "../models/users"
 import { Credentials, User } from "@webshop/shared"
-import { createJwtToken } from "../auth"
+import { createJwtToken } from "../middleware/auth"
+import bcrypt from "bcrypt"
 
 const authController: Router = express.Router()
 
@@ -23,7 +24,11 @@ export async function loginUser(
   }
 
   // Verify password
-  if (req.body.password !== user.password) {
+
+  // Check user password with hashed password stored in the database
+  const validPassword = await bcrypt.compare(req.body.password, user.password)
+
+  if (validPassword == false) {
     res
       .status(401) // Unauthorized
       .json({ error: "The password is incorrect" })
