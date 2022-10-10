@@ -1,7 +1,7 @@
 import express, { Router, Request, Response } from "express"
 import { UserModel } from "../models/users"
 import { Credentials, User } from "@webshop/shared"
-import { createJwtToken } from "../auth"
+import { createJwtToken } from "../middleware/auth"
 import bcrypt from "bcrypt"
 
 const authController: Router = express.Router()
