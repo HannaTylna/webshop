@@ -10,7 +10,7 @@ interface CustomRequest<T> extends Request {
 export async function signUpUser(req: CustomRequest<User>, res: Response) {
   const body = req.body as User
   try {
-    const exist = await UserModel.findOne({ mail: body.mail })
+    const exist = await UserModel.findOne({ mail: body.mail }).exec()
     if (exist) {
       res.status(400).json({ error: "user with this email already exists" })
     } else if (body.mail == "" || body.name == "") {
