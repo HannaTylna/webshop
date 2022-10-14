@@ -3,11 +3,12 @@ import { Product } from "@webshop/shared"
 
 const productSchema = new Schema({
   images: Array,
-  title: String,
-  description: String,
-  kategory: String,
+  title: {type: String, required: true, unique: true},
+  description: {type: String, required: true},
+  // kategory: String,
+  kategory: Array,
   weight: Number,
-  price: Number,
+  price: {type: Number, required: true},
   manufacturer: String,
 })
 
