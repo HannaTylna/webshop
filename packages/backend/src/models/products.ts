@@ -17,3 +17,7 @@ const ProductModel = model<Product>("Product", productSchema)
 export const getAllProducts = async (): Promise<Product[]> => {
   return ProductModel.find().exec()
 }
+
+export const getProductItem = async (productID: string): Promise<Product | null> => {
+  return ProductModel.findOne({id: productID}).exec()
+}
