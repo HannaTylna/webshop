@@ -2,14 +2,13 @@ import { model, Schema } from "mongoose"
 import { Product } from "@webshop/shared"
 
 const productSchema = new Schema({
-  images: Array,
+  images: [{type: String, required: true}],
   title: {type: String, required: true, unique: true},
   description: {type: String, required: true},
-  // kategory: String,
-  kategory: Array,
-  weight: Number,
+  kategory: [{type: String, required: true}],
+  weight: {type: Number, required: true},
   price: {type: Number, required: true},
-  manufacturer: String,
+  manufacturer: {type: String, required: true},
 })
 
 const ProductModel = model<Product>("Product", productSchema)
