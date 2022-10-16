@@ -15,7 +15,9 @@ export async function loginUser(
   res: Response
 ) {
   //  Search for user with email
-  let user: User | null = await UserModel.findOne({ mail: req.body.mail })
+  let user: User | null = await UserModel.findOne({
+    mail: req.body.mail,
+  }).exec()
   if (user == null || user.mail == null) {
     res
       .status(401) // Unauthorized

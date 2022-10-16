@@ -34,7 +34,5 @@ export function authenticateJwtTokenMiddleware(
   } else {
     return res.sendStatus(401) // missing header
   }
-  console.log("req.jwt.user: #######", req.jwt.mail)
-  console.log("req.jwt.name: #######", req.jwt.name)
   next()
 }
