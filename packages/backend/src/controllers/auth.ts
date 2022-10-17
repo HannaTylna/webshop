@@ -53,9 +53,8 @@ authController.get(
   "/:id",
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const userId = req.params._id
+      const userId = req.params.id
       const currentUser = await UserModel.findOne({ _id: userId }).exec()
-
       res.status(200).json(currentUser)
     } catch (error) {
       res.status(400).send(error)
@@ -66,7 +65,6 @@ authController.patch("/:id", async (req: Request, res: Response) => {
   try {
     const userId = req.params.id
     const { name, mail, telefonNumber, deliveryAddress } = req.body
-    console.log(userId)
     const updateUser = await UserModel.findOneAndUpdate(
       { _id: userId },
       {
