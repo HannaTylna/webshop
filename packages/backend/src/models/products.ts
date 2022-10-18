@@ -2,10 +2,10 @@ import { model, Schema } from "mongoose"
 import { Product } from "@webshop/shared"
 
 const productSchema = new Schema({
-  images: [{type: String, required: true}],
+  images: {type: Object, required: true},
   title: {type: String, required: true, unique: true},
   description: {type: String, required: true},
-  kategory: [{type: String, required: true}],
+  categories: [{type: String, required: true}],
   weight: {type: Number, required: true},
   price: {type: Number, required: true},
   manufacturer: {type: String, required: true},
