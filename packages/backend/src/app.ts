@@ -2,21 +2,16 @@ import cors from "cors"
 import express, { Application, json, Request, Response } from "express"
 import mongoose from "mongoose"
 import { config } from "./config/db"
-
-import authController from "./controllers/auth"
-import userController from "./controllers/user"
+import userRouter from "./routers/user"
+import usersRouter from "./routers/users"
 
 const app: Application = express()
 app.use(cors())
 app.use(json())
 const port: number = parseInt(process.env.SERVER_PORT || "4001")
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Webshop 💰")
-})
-
-app.use("/auth", authController)
-app.use("/user", userController)
+app.use("/", usersRouter)
+app.use("/user", userRouter)
 
 app.listen(config.server.port, async function () {
   await mongoose
