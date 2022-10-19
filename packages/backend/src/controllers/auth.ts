@@ -45,10 +45,9 @@ export const getUserInfo = async (
 ): Promise<void> => {
   {
     const userMail = req.jwt?.mail
-    console.log(userMail)
     try {
-      // const currentUser = await UserModel.findOne({ _id: userId }).exec()
-      // res.status(200).json(currentUser)
+      const currentUser = await UserModel.findOne({ mail: userMail }).exec()
+      res.status(200).json(currentUser)
     } catch (error) {
       res.status(400).send(error)
     }
