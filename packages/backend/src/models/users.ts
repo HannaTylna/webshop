@@ -3,12 +3,14 @@ import { User } from "@webshop/shared"
 import bcrypt from "bcrypt"
 
 const userSchema = new Schema({
-  _id: String,
-  name: { type: String, required: true },
+  _id: { type: String },
+  username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  mail: { type: String, required: true, unique: true },
-  telefonNumber: Number,
-  deliveryAddress: String,
+  firstName: { type: String },
+  lastName: { type: String },
+  email: { type: String, required: true },
+  phoneNumber: { type: Number },
+  deliveryAddress: { type: String },
 })
 
 export const UserModel = model<User>("User", userSchema)

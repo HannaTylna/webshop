@@ -1,8 +1,10 @@
 export default interface User {
   _id?: string
-  name: string
+  username: string
   password: string
-  mail?: string
-  telefonNumber?: number
+  firstName?: string
+  lastName?: string
+  email?: string
+  phoneNumber?: number
   deliveryAddress?: string
 }
