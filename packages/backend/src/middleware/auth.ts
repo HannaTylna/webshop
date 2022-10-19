@@ -1,24 +1,22 @@
 import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
 
-const JWT_SECRET: string = "53gdjnvkjndks83opasdmvur8djcgwuf"
+const JWT_SECRET: string = process.env.JWT_TOKEN || "your_jwt_secret"
 
 export type JwtPayload = {
-  user_id: string
-  name: string
-  mail: string
+  mail: string | undefined
 }
-export interface JwtRequest extends Request {
-  jwt: JwtPayload
+export interface JwtRequest<T> extends Request<T> {
+  jwt?: JwtPayload
 }
 
-export function createJwtToken(payload: JwtPayload): string {
+export function createJwtToken(payload: JwtPayload) {
   const token: string = jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" })
   return token
 }
 
 export function authenticateJwtTokenMiddleware(
-  req: JwtRequest,
+  req: JwtRequest<string>,
   res: Response,
   next: NextFunction
 ) {
