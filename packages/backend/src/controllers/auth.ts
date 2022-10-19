@@ -10,12 +10,12 @@ export const loginUser = async (
 ) => {
   //  Search for user with email
   let user: User | null = await UserModel.findOne({
-    mail: req.body.mail,
+    username: req.body.username,
   }).exec()
-  if (user == null || user.mail == null) {
+  if (user == null || user.username == null) {
     res
       .status(401) // Unauthorized
-      .json({ error: "The email does not exist" })
+      .json({ error: "The username does not exist" })
     return
   }
 
@@ -33,7 +33,7 @@ export const loginUser = async (
 
   // Create JWT Token
   const token: string = createJwtToken({
-    mail: user.mail,
+    username: user.username,
   })
 
   res.json({ token: token })
@@ -44,9 +44,9 @@ export const getUserInfo = async (
   res: Response
 ): Promise<void> => {
   {
-    const userMail = req.jwt?.mail
+    const userName = req.jwt?.username
     try {
-      const currentUser = await UserModel.findOne({ mail: userMail }).exec()
+      const currentUser = await UserModel.findOne({ username: userName }).exec()
       res.status(200).json(currentUser)
     } catch (error) {
       res.status(400).send(error)
@@ -54,16 +54,21 @@ export const getUserInfo = async (
   }
 }
 
-export const updateUserInfo = async (req: Request, res: Response) => {
+export const updateUserInfo = async (
+  req: JwtRequest<string>,
+  res: Response
+) => {
   try {
-    const userId = req.params.id
-    const { name, mail, telefonNumber, deliveryAddress } = req.body
+    const userName = req.jwt?.username
+    const { email, firstName, lastName, phoneNumber, deliveryAddress } =
+      req.body
     const updateUser = await UserModel.findOneAndUpdate(
-      { _id: userId },
+      { username: userName },
       {
-        name: name,
-        mail: mail,
-        telefonNumber: telefonNumber,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
         deliveryAddress: deliveryAddress,
       },
       { returnDocument: "after" }

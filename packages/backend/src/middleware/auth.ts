@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from "express"
 const JWT_SECRET: string = process.env.JWT_TOKEN || "your_jwt_secret"
 
 export type JwtPayload = {
-  mail: string | undefined
+  username: string | undefined
 }
 export interface JwtRequest<T> extends Request<T> {
   jwt?: JwtPayload

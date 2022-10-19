@@ -5,11 +5,11 @@ import { User } from "@webshop/shared"
 export const signUpUser = async (req: Request, res: Response) => {
   const body = req.body as User
   try {
-    const exist = await UserModel.findOne({ mail: body.mail }).exec()
+    const exist = await UserModel.findOne({ username: body.username }).exec()
     if (exist) {
-      res.status(400).json({ error: "user with this email already exists" })
-    } else if (body.mail == "" || body.name == "") {
-      res.status(400).json({ error: "both name and mail are required" })
+      res.status(400).json({ error: "user with this username already exists" })
+    } else if (body.email == "" || body.username == "") {
+      res.status(400).json({ error: "both name and email are required" })
     } else {
       let user: User = await createUser(body)
       res.send({ user: user })
