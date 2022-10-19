@@ -1,13 +1,8 @@
-import express, { Router, Request, Response } from "express"
+import { Request, Response } from "express"
 import { createUser, UserModel } from "../models/users"
 import { User } from "@webshop/shared"
 
-const userController: Router = express.Router()
-interface CustomRequest<T> extends Request {
-  body: T
-}
-
-export async function signUpUser(req: CustomRequest<User>, res: Response) {
+export const signUpUser = async (req: Request, res: Response) => {
   const body = req.body as User
   try {
     const exist = await UserModel.findOne({ mail: body.mail }).exec()
@@ -25,8 +20,3 @@ export async function signUpUser(req: CustomRequest<User>, res: Response) {
       .send({ message: "failed to sign up user", error: error })
   }
 }
-
-// Sign Up User localhost:4000/user/signUp
-userController.post("/signUp", signUpUser)
-
-export default userController

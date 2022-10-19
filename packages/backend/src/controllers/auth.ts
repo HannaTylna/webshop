@@ -1,19 +1,13 @@
-import express, { Router, Request, Response } from "express"
+import { Request, Response } from "express"
 import { UserModel } from "../models/users"
 import { Credentials, User } from "@webshop/shared"
-import { createJwtToken } from "../middleware/auth"
+import { createJwtToken, JwtRequest } from "../middleware/auth"
 import bcrypt from "bcrypt"
 
-const authController: Router = express.Router()
-
-interface CustomRequest<T> extends Request {
-  body: T
-}
-
-export async function loginUser(
-  req: CustomRequest<Credentials>,
+export const loginUser = async (
+  req: JwtRequest<Credentials>,
   res: Response
-) {
+) => {
   //  Search for user with email
   let user: User | null = await UserModel.findOne({
     mail: req.body.mail,
@@ -39,29 +33,29 @@ export async function loginUser(
 
   // Create JWT Token
   const token: string = createJwtToken({
-    user_id: user._id as string,
-    name: user.name,
-    mail: user.mail as string,
+    mail: user.mail,
   })
 
   res.json({ token: token })
 }
 
-// Login User
-authController.post("/loginUser", loginUser)
-authController.get(
-  "/:id",
-  async (req: Request, res: Response): Promise<void> => {
+export const getUserInfo = async (
+  req: JwtRequest<string>,
+  res: Response
+): Promise<void> => {
+  {
+    const userMail = req.jwt?.mail
+    console.log(userMail)
     try {
-      const userId = req.params.id
-      const currentUser = await UserModel.findOne({ _id: userId }).exec()
-      res.status(200).json(currentUser)
+      // const currentUser = await UserModel.findOne({ _id: userId }).exec()
+      // res.status(200).json(currentUser)
     } catch (error) {
       res.status(400).send(error)
     }
   }
-)
-authController.patch("/:id", async (req: Request, res: Response) => {
+}
+
+export const updateUserInfo = async (req: Request, res: Response) => {
   try {
     const userId = req.params.id
     const { name, mail, telefonNumber, deliveryAddress } = req.body
@@ -79,6 +73,4 @@ authController.patch("/:id", async (req: Request, res: Response) => {
   } catch (error) {
     res.status(400).send(error)
   }
-})
-
-export default authController
+}
