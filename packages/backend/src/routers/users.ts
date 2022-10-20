@@ -1,6 +1,7 @@
 import express, { Router } from "express"
-import { loginUser } from "../controllers/auth"
+import { getUserInfo, loginUser, updateUserInfo } from "../controllers/auth"
 import { signUpUser } from "../controllers/user"
+import { authenticateJwtTokenMiddleware } from "../middleware/auth"
 
 const usersRouter: Router = express.Router()
 
@@ -8,5 +9,10 @@ const usersRouter: Router = express.Router()
 usersRouter.post("/signUp", signUpUser)
 // Login User
 usersRouter.post("/loginUser", loginUser)
+usersRouter.use("/info", authenticateJwtTokenMiddleware)
+// Get info
+usersRouter.get("/info", getUserInfo)
+// Update info
+usersRouter.patch("/info", updateUserInfo)
 
 export default usersRouter
