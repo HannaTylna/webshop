@@ -1,27 +1,21 @@
-import express, { Router, Request, Response } from "express"
+import { Request, Response } from "express"
 import { UserModel } from "../models/users"
 import { Credentials, User } from "@webshop/shared"
-import { createJwtToken } from "../middleware/auth"
+import { createJwtToken, JwtRequest } from "../middleware/auth"
 import bcrypt from "bcrypt"
 
-const authController: Router = express.Router()
-
-interface CustomRequest<T> extends Request {
-  body: T
-}
-
-export async function loginUser(
-  req: CustomRequest<Credentials>,
+export const loginUser = async (
+  req: JwtRequest<Credentials>,
   res: Response
-) {
+) => {
   //  Search for user with email
   let user: User | null = await UserModel.findOne({
-    mail: req.body.mail,
+    username: req.body.username,
   }).exec()
-  if (user == null || user.mail == null) {
+  if (user == null || user.username == null) {
     res
       .status(401) // Unauthorized
-      .json({ error: "The email does not exist" })
+      .json({ error: "The username does not exist" })
     return
   }
 
@@ -39,15 +33,48 @@ export async function loginUser(
 
   // Create JWT Token
   const token: string = createJwtToken({
-    user_id: user._id as string,
-    name: user.name,
-    mail: user.mail as string,
+    username: user.username,
   })
 
   res.json({ token: token })
 }
 
-// Login User
-authController.post("/loginUser", loginUser)
+export const getUserInfo = async (
+  req: JwtRequest<string>,
+  res: Response
+): Promise<void> => {
+  {
+    const userName = req.jwt?.username
+    try {
+      const currentUser = await UserModel.findOne({ username: userName }).exec()
+      res.status(200).json(currentUser)
+    } catch (error) {
+      res.status(400).send(error)
+    }
+  }
+}
 
-export default authController
+export const updateUserInfo = async (
+  req: JwtRequest<string>,
+  res: Response
+) => {
+  try {
+    const userName = req.jwt?.username
+    const { email, firstName, lastName, phoneNumber, deliveryAddress } =
+      req.body
+    const updateUser = await UserModel.findOneAndUpdate(
+      { username: userName },
+      {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        deliveryAddress: deliveryAddress,
+      },
+      { returnDocument: "after" }
+    )
+    res.status(200).json(updateUser)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}
