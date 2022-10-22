@@ -7,7 +7,7 @@ import router from "./routers/index"
 const app: Application = express()
 app.use(cors())
 app.use(json())
-const port: number = parseInt(process.env.SERVER_PORT || "4001")
+const port: number = parseInt(process.env.SERVER_PORT || "4000")
 
 app.use("/api", router)
 
