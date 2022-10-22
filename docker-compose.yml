@@ -6,7 +6,7 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - MONGODB_URL=mongodb://db:27017/chat
+      - MONGODB_URL=mongodb://db_webshop:27017/webshop
 
   frontend:
     build:
