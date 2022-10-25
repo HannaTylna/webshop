@@ -18,6 +18,7 @@ export const loadAll = async (
 
 export const submit = async (req: JwtRequest<string>, res: Response) => {
   const userId: string | undefined = req.jwt?.userid
+  const { deliveryAddress } = req.body
   try {
     const cart = (await OrderModel.findOne({
       user: userId,
@@ -27,6 +28,7 @@ export const submit = async (req: JwtRequest<string>, res: Response) => {
       res.status(400).json({ error: "the cart is empty" })
     } else {
       cart.status = "registered"
+      cart.deliveryAddress = deliveryAddress
       await saveOrder(cart)
       res.sendStatus(200)
     }
@@ -45,11 +47,7 @@ export const saveCart = async (req: JwtRequest<string>, res: Response) => {
       status: "cart",
     }).exec()) as Order
 
-    console.info(`order: ${cart}`)
-
     if (cart) {
-      // console.log(cart)
-      //if _id is populated
       cart.products = items
       savedCart = await OrderModel.findOneAndUpdate({ _id: cart._id }, cart, {
         new: true,
@@ -65,13 +63,9 @@ export const saveCart = async (req: JwtRequest<string>, res: Response) => {
         status: "cart",
       }
       savedCart = await saveOrder(newCart)
-      console.info(`savedCart1: ${savedCart}`)
     }
-    console.info(`savedCart2: ${savedCart}`)
     res.status(200).send(savedCart)
   } catch (error) {
-    console.log(`error: ${error}`)
-
     res.status(400).json({ message: "failed to submit order", error: error })
   }
 }
