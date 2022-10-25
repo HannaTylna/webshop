@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
 
-const JWT_SECRET: string = process.env.JWT_TOKEN || "your_jwt_secret"
+import { config } from "../config/auth"
 
 export type JwtPayload = {
   username: string | undefined
@@ -11,7 +11,9 @@ export interface JwtRequest<T> extends Request<T> {
 }
 
 export function createJwtToken(payload: JwtPayload) {
-  const token: string = jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" })
+  const token: string = jwt.sign(payload, config.secret, {
+    expiresIn: config.tokenLife,
+  })
   return token
 }
 
@@ -24,7 +26,7 @@ export function authenticateJwtTokenMiddleware(
   if (authHeader) {
     const token = authHeader.split(" ")[1]
     if (token) {
-      const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload
+      const decoded = jwt.verify(token, config.secret) as JwtPayload
       req.jwt = decoded
     } else {
       return res.sendStatus(400) // bad token
