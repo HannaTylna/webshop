@@ -58,8 +58,10 @@ const orderSchema = new Schema(
 
 export const OrderModel = model<Order>("Order", orderSchema)
 
-export const getAllOrders = async (): Promise<Order[]> => {
-  return OrderModel.find().exec()
+export const getAllOrders = async (
+  user: string | undefined
+): Promise<Order[]> => {
+  return OrderModel.find({ user }).exec()
 }
 
 export const saveOrder = async (order: Order): Promise<Order> => {

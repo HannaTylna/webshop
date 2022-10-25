@@ -1,10 +1,16 @@
 import { Response, Request } from "express"
 import { getAllOrders, saveOrder, OrderModel } from "../models/order"
 import { Order, OrderItem } from "@webshop/shared"
+import { JwtRequest } from "../middleware/auth"
 
-export const loadAll = async (req: Request, res: Response) => {
+export const loadAll = async (
+  req: JwtRequest<string>,
+  res: Response
+): Promise<void> => {
+  console.log(req.jwt)
   try {
-    const orders = await getAllOrders()
+    const userId: string | undefined = req.jwt?.userid
+    const orders = await getAllOrders(userId)
     res.status(200).json(orders)
   } catch (error) {
     res.status(400).json(error)
@@ -27,9 +33,9 @@ export const submit = async (req: Request, res: Response) => {
   }
 }
 
-export const saveCart = async (req: Request, res: Response) => {
+export const saveCart = async (req: JwtRequest<string>, res: Response) => {
   const items: Array<OrderItem> = req.body
-  const userId: string = "6356eb308324b32ccb35ea8f"
+  const userId = req.jwt?.userid || ""
   try {
     let savedCart: Order | null
     const cart = (await OrderModel.findOne({
