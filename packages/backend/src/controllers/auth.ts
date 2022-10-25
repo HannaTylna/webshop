@@ -1,8 +1,12 @@
 import { Request, Response } from "express"
-import { UserModel } from "../models/users"
-import { Credentials, User } from "@webshop/shared"
-import { createJwtToken, JwtRequest } from "../middleware/auth"
+import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
+
+import { Credentials, User } from "@webshop/shared"
+
+import { UserModel } from "../models/users"
+import { JwtRequest } from "../middleware/auth"
+import { config } from "../config/auth"
 
 export const loginUser = async (
   req: JwtRequest<Credentials>,
@@ -31,12 +35,21 @@ export const loginUser = async (
     return
   }
 
-  // Create JWT Token
-  const token: string = createJwtToken({
+  const userData = {
     username: user.username,
+  }
+
+  // Create JWT Token
+  const token: string = jwt.sign(userData, config.secret, {
+    expiresIn: config.tokenLife,
   })
 
-  res.json({ token: token })
+  // Create JWT Refresh Token
+  const refreshToken = jwt.sign(userData, config.refreshTokenSecret, {
+    expiresIn: config.refreshTokenLife,
+  })
+
+  res.json({ token: token, refreshToken: refreshToken })
 }
 
 export const getUserInfo = async (
