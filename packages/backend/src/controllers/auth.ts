@@ -5,8 +5,10 @@ import bcrypt from "bcrypt"
 import { Credentials, User } from "@webshop/shared"
 
 import { UserModel } from "../models/users"
-import { JwtRequest } from "../middleware/auth"
+import { JwtRequest, JwtResponse, JwtPayload } from "../middleware/auth"
 import { config } from "../config/auth"
+
+const tokenList = new Map<string, JwtResponse>()
 
 export const loginUser = async (
   req: JwtRequest<Credentials>,
@@ -49,7 +51,10 @@ export const loginUser = async (
     expiresIn: config.refreshTokenLife,
   })
 
-  res.json({ token: token, refreshToken: refreshToken })
+  const response: JwtResponse = { token: token, refreshToken: refreshToken }
+  tokenList.set(refreshToken, response)
+
+  res.json(response)
 }
 
 export const getUserInfo = async (
