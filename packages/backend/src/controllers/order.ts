@@ -10,3 +10,19 @@ export const loadAll = async (req: Request, res: Response) => {
     res.status(400).json(error)
   }
 }
+
+export const submit = async (req: Request, res: Response) => {
+  const { orderId } = req.body
+  try {
+    const order = (await OrderModel.findOne({ _id: orderId }).exec()) as Order
+    if (!order) {
+      res.status(400).json({ error: "the cart is empty" })
+    } else {
+      order.status = "registered"
+      await saveOrder(order)
+      res.sendStatus(200)
+    }
+  } catch (error) {
+    res.status(400).send({ message: "failed to submit order", error: error })
+  }
+}
