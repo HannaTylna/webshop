@@ -7,7 +7,6 @@ export const loadAll = async (
   req: JwtRequest<string>,
   res: Response
 ): Promise<void> => {
-  console.log(req.jwt)
   try {
     const userId: string | undefined = req.jwt?.userid
     const orders = await getAllOrders(userId)
@@ -17,15 +16,18 @@ export const loadAll = async (
   }
 }
 
-export const submit = async (req: Request, res: Response) => {
-  const { orderId } = req.body
+export const submit = async (req: JwtRequest<string>, res: Response) => {
+  const userId: string | undefined = req.jwt?.userid
   try {
-    const order = (await OrderModel.findOne({ _id: orderId }).exec()) as Order
-    if (!order) {
+    const cart = (await OrderModel.findOne({
+      user: userId,
+      status: "cart",
+    }).exec()) as Order
+    if (!cart) {
       res.status(400).json({ error: "the cart is empty" })
     } else {
-      order.status = "registered"
-      await saveOrder(order)
+      cart.status = "registered"
+      await saveOrder(cart)
       res.sendStatus(200)
     }
   } catch (error) {
