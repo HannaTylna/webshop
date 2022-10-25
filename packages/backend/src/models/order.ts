@@ -31,7 +31,7 @@ const orderSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
     products: [ItemSchema],
-    shippingCost: { type: Number },
+    shippingCost: { type: Number, default: 50 },
     deliveryAddress: { type: String },
     status: { type: String, required: true },
   },
@@ -42,7 +42,7 @@ const orderSchema = new Schema(
         get() {
           return this.products.reduce(
             (sum, current) => sum + current.quantity * current.price,
-            0
+            this.shippingCost
           )
         },
       },
