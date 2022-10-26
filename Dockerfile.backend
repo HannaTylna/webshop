@@ -13,6 +13,6 @@ COPY ./packages/shared/ ./packages/shared/
 
 RUN npm run build -w packages/backend
 
-EXPOSE ${BACKEND_PORT}
+EXPOSE 4000
 
 CMD ["node", "packages/backend/dist/app.js"]

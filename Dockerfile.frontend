@@ -15,6 +15,6 @@ ARG APP_WEBSHOP_API
 ENV RECT_APP_WEBSHOP_API=${APP_WEBSHOP_API}
 RUN npm run build -w packages/frontend
 
-EXPOSE ${FRONTEND_PORT}
+EXPOSE 3000
 
 CMD [ "npx", "serve", "packages/frontend/build" ]
