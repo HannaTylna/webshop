@@ -4,7 +4,7 @@ services:
     build:
       dockerfile: Dockerfile.backend
     ports:
-      - "${MONGO_DB_BACKEND_PORT}:${MONGO_DB_BACKEND_PORT}"
+      - "4000:4000"
     environment:
       - MONGODB_URL=${MONGODB_URL}
 
@@ -14,12 +14,12 @@ services:
       args:
         APP_WEBSHOP_API: ${APP_WEBSHOP_API}
     ports:
-      - "${MONGO_DB_FRONTEND_PORT}:${MONGO_DB_FRONTEND_PORT}"
+      - "3000:3000"
 
   db_webshop:
     image: mongo:${MONGO_VERSION}
     ports:
-      - "${MONGO_DB_PORT}:${MONGO_DB_PORT}"
+      - "27017:27017"
     container_name: ${MONGO_DB_CONTAINER_NAME}
     volumes:
       - /data/${MONGO_DB_CONTAINER_NAME}
