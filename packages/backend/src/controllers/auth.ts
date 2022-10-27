@@ -107,7 +107,7 @@ export const refreshToken = async (
   req: JwtRequest<Credentials>,
   res: Response
 ) => {
-  const refreshToken = req.body?.refreshToken
+  const refreshToken: string = req.body?.refreshToken
 
   if (refreshToken == null) {
     return res.status(403).json({ message: "Refresh Token is required!" })
@@ -115,6 +115,11 @@ export const refreshToken = async (
 
   try {
     // Check if refreshToken is in tokenList
+    if (!tokenList.has(refreshToken)) {
+      res.status(403).json({ message: "Refresh token is not in database!" })
+      return
+    }
+
     return res.status(200).json({
       // accessToken: newAccessToken,
       // refreshToken: refreshToken.token,
