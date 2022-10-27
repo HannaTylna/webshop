@@ -1,8 +1,7 @@
 import { Product } from "@webshop/shared"
 import express, { Router, Response, Request } from "express"
-import { getAllProducts, getProduct } from "../models/products"
+import { getAllProducts, getProduct, getProductsbyCategory } from "../models/products"
 import { productSearch } from "../services/product.service"
-import {getProductsbyCategory} from '../models/products'
 
 export const loadAllProducts = async (req: Request, res: Response) => {
   try {
