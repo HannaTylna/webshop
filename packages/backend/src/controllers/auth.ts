@@ -39,6 +39,7 @@ export const loginUser = async (
 
   const userData = {
     username: user.username,
+    userid: user._id,
   }
 
   // Create JWT Token
@@ -51,7 +52,12 @@ export const loginUser = async (
     expiresIn: config.refreshTokenLife,
   })
 
-  const response: JwtResponse = { token: token, refreshToken: refreshToken }
+  const response: JwtResponse = {
+    token: token,
+    refreshToken: refreshToken,
+    userid: userData.userid as string,
+  }
+  // Store refresh token and user info in tokenList
   tokenList.set(refreshToken, response)
 
   res.json(response)
@@ -94,5 +100,26 @@ export const updateUserInfo = async (
     res.status(200).json(updateUser)
   } catch (error) {
     res.status(400).send(error)
+  }
+}
+
+export const refreshToken = async (
+  req: JwtRequest<Credentials>,
+  res: Response
+) => {
+  const refreshToken = req.body?.refreshToken
+
+  if (refreshToken == null) {
+    return res.status(403).json({ message: "Refresh Token is required!" })
+  }
+
+  try {
+    // Check if refreshToken is in tokenList
+    return res.status(200).json({
+      // accessToken: newAccessToken,
+      // refreshToken: refreshToken.token,
+    })
+  } catch (err) {
+    return res.status(500).send({ message: err })
   }
 }
