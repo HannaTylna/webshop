@@ -5,6 +5,7 @@ import { config } from "../config/auth"
 
 export type JwtPayload = {
   username: string | undefined
+  userid: string | undefined
 }
 export interface JwtRequest<T> extends Request<T> {
   jwt?: JwtPayload

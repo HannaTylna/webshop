@@ -34,6 +34,7 @@ export const loginUser = async (
   // Create JWT Token
   const token: string = createJwtToken({
     username: user.username,
+    userid: user._id,
   })
 
   res.json({ token: token })
