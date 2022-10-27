@@ -134,8 +134,15 @@ export const refreshToken = async (
     }
 
     // Get user information to create a new token
-    const userid = decoded.userid
-    const username = decoded.username
+    const userData = {
+      username: decoded.username,
+      userid: decoded.userid,
+    }
+
+    // Create new access token
+    const token: string = jwt.sign(userData, config.secret, {
+      expiresIn: config.tokenLife,
+    })
 
     return res.status(200).json({
       // accessToken: newAccessToken,
