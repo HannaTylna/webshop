@@ -144,9 +144,10 @@ export const refreshToken = async (
       expiresIn: config.tokenLife,
     })
 
+    // Return new values
     return res.status(200).json({
-      // accessToken: newAccessToken,
-      // refreshToken: refreshToken.token,
+      token: token,
+      refreshToken: refreshToken,
     })
   } catch (err) {
     return res.status(500).send({ message: err })
