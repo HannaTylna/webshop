@@ -5,8 +5,6 @@ import { Row } from "react-bootstrap"
 import ProductList from "../components/ProductList"
 export default function Homepage() {
   const [products, setProducts] = useState<Product[]>([])
-  axios.defaults.baseURL =
-    process.env.REACT_APP_WEBSHOP_API || "http://localhost:4000"
 
   const getProducts = async (): Promise<Product[]> => {
     const response = await axios.get<Product[]>("/api/products")

@@ -2,6 +2,9 @@ import cors from "cors"
 import express, { Application, json } from "express"
 import { setUpMongoDb } from "./models/common"
 import router from "./routers/index"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const app: Application = express()
 app.use(cors())
