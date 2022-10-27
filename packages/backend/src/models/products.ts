@@ -17,8 +17,20 @@ export const getAllProducts = async (): Promise<Product[]> => {
   return ProductModel.find().exec()
 }
 
+export const getProductsbyCategory = async (
+  categories: string | string[]
+): Promise<Product[] | null> => {
+  return ProductModel.find({ categories }).exec()
+}
+
 export const getProduct = async (
   productId: string | string[]
 ): Promise<Product | null> => {
   return ProductModel.findOne({ _id: productId }).exec()
+}
+
+export const searchProductItems = async (
+  searchParam: string
+): Promise<Product[] | null> => {
+  return ProductModel.find({ title: { $regex: searchParam } }).exec()
 }
