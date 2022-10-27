@@ -27,36 +27,55 @@ export default function SigninPage() {
 	};
 
 	return (
-        <div>
-            Sign in
-			<div>
-			<input
-				type="email"
-				id="typeEmailX"
-				value={username}
-				onChange={(e) => setUsername(e.target.value)}
-			/>
-			<label htmlFor="typeEmailX">
-				Username
-			</label>
-			<input
-				type="password"
-				id="typePasswordX"
-				value={password}
-				onChange={(e) => setPassword(e.target.value)}
-			/>
-			<label htmlFor="typePasswordX">
-				Password
-			</label>
-			<button
-				onClick={handleOnClick}
-				type="submit"
-			>
-				Login
-			</button>
+		<section className="vh-100 gradient-custom">
+			<div className="container py-5 h-100">
+				<div className="row d-flex justify-content-center align-items-center h-100">
+					<div className="col-12 col-md-8 col-lg-6 col-xl-5">
+						<div className="card text-dark">
+							<div className="card-body p-5 text-center">
+								<div className="mb-md-4 mt-md-4 pb-5">
+									<h2 className="fw-bold mb-2 text-uppercase">Sign in</h2>
+									<p className="text-secondary-50 mb-5">
+										Please enter your username and password!
+									</p>
+									<div className="form-outline form-white mb-4">
+										<input
+											type="email"
+											id="typeEmailX"
+											value={username}
+											onChange={(e) => setUsername(e.target.value)}
+											className="form-control form-control-lg"
+										/>
+										<label className="form-label" htmlFor="typeEmailX">
+											Username
+										</label>
+									</div>
 
+									<div className="form-outline form-white mb-4">
+										<input
+											type="password"
+											id="typePasswordX"
+											value={password}
+											onChange={(e) => setPassword(e.target.value)}
+											className="form-control form-control-lg"
+										/>
+										<label className="form-label" htmlFor="typePasswordX">
+											Password
+										</label>
+									</div>
+									<button
+										className="btn btn-primary btn-lg px-5"
+										onClick={handleOnClick}
+										type="submit"
+									>
+										Login
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-        </div>
+		</section>
 	);
 }
-
