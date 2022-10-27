@@ -120,6 +120,18 @@ export const refreshToken = async (
       return
     }
 
+    // Verify refreshToken expiration time
+    try {
+      const decoded = jwt.verify(
+        refreshToken,
+        config.refreshTokenSecret
+      ) as JwtPayload
+    } catch (err) {
+      return res.status(400).json({
+        message: "Refresh Token expired. Please make a new sign in request",
+      })
+    }
+
     return res.status(200).json({
       // accessToken: newAccessToken,
       // refreshToken: refreshToken.token,
