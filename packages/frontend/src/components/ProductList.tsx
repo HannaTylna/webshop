@@ -4,13 +4,15 @@ import { Button, Card, Col } from "react-bootstrap"
 
 const ProductRow = (props: { product: Product }) => {
   const { title, price, images } = props.product
-  const quantity = 1
+  const values = Object.values(images)
+  const imageURL = values[1].large
+  let quantity
   return (
     <Col>
       <Card className="h-100">
         <Card.Img
           variant="top"
-          src={images.src.large}
+          src={imageURL}
           height="200px"
           style={{ objectFit: "cover" }}
         />
