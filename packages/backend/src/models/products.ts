@@ -11,7 +11,7 @@ const productSchema = new Schema({
   manufacturer: { type: String, required: true },
 })
 
-const ProductModel = model<Product>("Product", productSchema)
+export const ProductModel = model<Product>("Product", productSchema)
 
 export const getAllProducts = async (): Promise<Product[]> => {
   return ProductModel.find().exec()
@@ -34,4 +34,3 @@ export const searchProductItems = async (
 ): Promise<Product[] | null> => {
   return ProductModel.find({ title: { $regex: searchParam } }).exec()
 }
-

@@ -5,6 +5,7 @@ const JWT_SECRET: string = process.env.JWT_TOKEN || "your_jwt_secret"
 
 export type JwtPayload = {
   username: string | undefined
+  userid: string | undefined
 }
 export interface JwtRequest<T> extends Request<T> {
   jwt?: JwtPayload
