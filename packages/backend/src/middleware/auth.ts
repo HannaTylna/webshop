@@ -7,11 +7,13 @@ const tokenList = new Map<string, JwtPayload>()
 
 export type JwtPayload = {
   username: string | undefined
+  userid: string | undefined
 }
 
 export type JwtResponse = {
   token: string
   refreshToken: string
+  userid: string
 }
 
 export interface JwtRequest<T> extends Request<T> {
@@ -28,9 +30,17 @@ export function authenticateJwtTokenMiddleware(
   if (authHeader) {
     const token = authHeader.split(" ")[1]
     if (token) {
-      const decoded = jwt.verify(token, config.secret) as JwtPayload
+      try {
+        const decoded = jwt.verify(token, config.secret) as JwtPayload
+      } catch (err) {
+        return res
+          .status(400)
+          .json({ message: "Token expired. Please make a new sign in request" }) // bad token
+      }
     } else {
-      return res.sendStatus(400) // bad token
+      return res
+        .send(400)
+        .json({ message: "Bad token. Please check your Authorization header." }) // bad token
     }
   } else {
     return res.sendStatus(401) // missing header
