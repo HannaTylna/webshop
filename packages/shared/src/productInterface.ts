@@ -1,6 +1,6 @@
 export default interface Product {
   _id?: string
-  images: Array<string>
+  images: object
   title: string
   description: string
   kategory: string
