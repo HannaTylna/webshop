@@ -71,6 +71,13 @@ export default function SigninPage() {
 										Login
 									</button>
 								</div>
+								<div>
+									{warning && (
+										<div className="alert alert-warning" role="alert">
+											{warning}
+										</div>
+									)}
+								</div>
 								<div className="mb-1 pb-5">
 									<p className="mb-0">
 										Don't have an account?{" "}
