@@ -3,4 +3,4 @@ import Product from "./productInterface"
 import Credentials from "./credentialsInterface"
 import Order, { OrderItem } from "./orderInterface"
 
-export { User, Product, Credentials, Order, OrderItem }
+export type { User, Product, Credentials, Order, OrderItem }

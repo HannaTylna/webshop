@@ -22,7 +22,6 @@ export const getProductsbyCategory = async (
 ): Promise<Product[] | null> => {
   return ProductModel.find({ categories }).exec()
 }
-
 export const getProduct = async (
   productId: string | string[]
 ): Promise<Product | null> => {
