@@ -1,6 +1,6 @@
 import { Product } from "@webshop/shared"
 import express, { Router, Response, Request } from "express"
-import { getAllProducts, getProduct } from "../models/products"
+import { getAllProducts, getProduct, getProductsbyCategory } from "../models/products"
 import { productSearch } from "../services/product.service"
 
 export const loadAllProducts = async (req: Request, res: Response) => {
@@ -26,5 +26,14 @@ export const searchProduct = async (req: Request, res: Response<Product[]>) => {
     res.send(result)
   } catch (err) {
     res.sendStatus(404)
+  }
+}
+
+export const loadProductsbyCategory = async (req: Request, res: Response) => {
+  try {
+    const productCategory = req.params.cat
+    res.status(200).json(await getProductsbyCategory(productCategory))
+  } catch (error){
+    res.status(400).send(error)
   }
 }
