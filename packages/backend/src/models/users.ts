@@ -14,9 +14,6 @@ const userSchema = new Schema({
 })
 
 export const UserModel = model<User>("User", userSchema)
-export const getUser = async () => {
-  return UserModel.find({}).exec()
-}
 
 export const createUser = async (user: User): Promise<User> => {
   const u = new UserModel(user)
