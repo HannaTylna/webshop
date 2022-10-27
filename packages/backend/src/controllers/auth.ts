@@ -120,9 +120,10 @@ export const refreshToken = async (
       return
     }
 
-    // Verify refreshToken expiration time
+    let decoded: JwtPayload
+    // Verify refreshToken expiration time has not passed
     try {
-      const decoded = jwt.verify(
+      decoded = jwt.verify(
         refreshToken,
         config.refreshTokenSecret
       ) as JwtPayload
@@ -131,6 +132,10 @@ export const refreshToken = async (
         message: "Refresh Token expired. Please make a new sign in request",
       })
     }
+
+    // Get user information to create a new token
+    const userid = decoded.userid
+    const username = decoded.username
 
     return res.status(200).json({
       // accessToken: newAccessToken,
