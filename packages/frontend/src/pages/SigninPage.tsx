@@ -81,7 +81,7 @@ export default function SigninPage() {
 								<div className="mb-1 pb-5">
 									<p className="mb-0">
 										Don't have an account?{" "}
-										<a href="#!" className="text-primary-50 fw-bold">
+										<a href="/signup" className="text-primary-50 fw-bold">
 											Sign Up
 										</a>
 									</p>
