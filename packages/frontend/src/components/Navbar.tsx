@@ -6,10 +6,7 @@ import avatar from "../images/avatar.jpg"
 
 export default function Navbar() {
   return (
-    <NavbarBs
-      className="bg-white shadow-sm mb-3 sticky-top p-4"
-      style={{ position: "relative" }}
-    >
+    <NavbarBs sticky="top" className="bg-white shadow-sm mb-3 p-4">
       <Container>
         <Nav className="d-flex justify-content-center align-items-center">
           <Nav.Link as={NavLink} to="/login">

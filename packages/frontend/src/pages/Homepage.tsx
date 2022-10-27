@@ -3,6 +3,7 @@ import axios from "axios"
 import { Product } from "@webshop/shared"
 import { Row } from "react-bootstrap"
 import ProductList from "../components/ProductList"
+
 export default function Homepage() {
   const [products, setProducts] = useState<Product[]>([])
   axios.defaults.baseURL =
@@ -16,7 +17,7 @@ export default function Homepage() {
   useEffect(() => {
     getProducts()
   }, [])
-  console.log(products)
+
   return (
     <>
       <Row md={2} xs={1} lg={3} className="g-3">

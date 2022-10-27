@@ -1,9 +1,13 @@
+import axios from "axios"
 import React from "react"
 import { Container } from "react-bootstrap"
 import { Routes, Route } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import Homepage from "./pages/Homepage"
+import ProductPage from "./pages/ProductPage"
 
+axios.defaults.baseURL =
+  process.env.REACT_APP_WEBSHOP_API || "http://localhost:4000"
 function App() {
   return (
     <>
@@ -11,8 +15,9 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/products/:id" element={<ProductPage />} />
         </Routes>
-        <h1>Webshop 💰</h1>
+        {/* <h1>Webshop 💰</h1> */}
       </Container>
     </>
   )
