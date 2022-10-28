@@ -12,7 +12,7 @@ export default function SignupPage() {
     
     const handleOnClick = async ():Promise<void> => {
         if (!username || !password || !email) {
-			setWarning("username, password are required");
+			setWarning("username, email and password are required");
 		}
         const signupResponse = await axios.post(
 			`${process.env.REACT_APP_WEBSHOP}/api/user/signUp`,
@@ -37,6 +37,9 @@ export default function SignupPage() {
                         <div className="card-body p-5 text-center">
                             <div className="mb-md-4 mt-md-4 pb-5">
                                 <h2 className="fw-bold mb-2 text-uppercase">Sign up</h2>
+                                <p className="text-secondary-50 mb-5">
+									Create an account
+								</p>
                                 <div className="form-outline form-white mb-4">
                                     <input
                                         type="text"
@@ -90,6 +93,14 @@ export default function SignupPage() {
                                     </div>
                                 )}
                             </div>
+                            <div className="mb-1 pb-5">
+									<p className="mb-0">
+										Already a member?{" "}
+										<a href="/signin" className="text-primary-50 fw-bold">
+											Sign in
+										</a>
+									</p>
+								</div>
                         </div>
                     </div>
                 </div>
