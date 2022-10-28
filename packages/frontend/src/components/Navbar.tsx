@@ -12,7 +12,7 @@ export default function Navbar() {
     >
       <Container>
         <Nav className="d-flex justify-content-center align-items-center">
-          <Nav.Link as={NavLink} to="/login">
+          <Nav.Link as={NavLink} to="/signin">
             login
           </Nav.Link>
           <Nav.Link as={NavLink} to="/signup">
