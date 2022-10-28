@@ -1,19 +1,24 @@
 import jwt from "jsonwebtoken"
 import { Request, Response, NextFunction } from "express"
 
-const JWT_SECRET: string = process.env.JWT_TOKEN || "your_jwt_secret"
+import { config } from "../config/auth"
+
+const tokenList = new Map<string, JwtPayload>()
 
 export type JwtPayload = {
   username: string | undefined
   userid: string | undefined
 }
-export interface JwtRequest<T> extends Request<T> {
-  jwt?: JwtPayload
+
+export type JwtResponse = {
+  token: string
+  refreshToken: string
+  userid: string
 }
 
-export function createJwtToken(payload: JwtPayload) {
-  const token: string = jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" })
-  return token
+export interface JwtRequest<T> extends Request<T> {
+  jwt?: JwtPayload
+  refreshToken?: JwtPayload
 }
 
 export function authenticateJwtTokenMiddleware(
@@ -25,10 +30,17 @@ export function authenticateJwtTokenMiddleware(
   if (authHeader) {
     const token = authHeader.split(" ")[1]
     if (token) {
-      const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload
-      req.jwt = decoded
+      try {
+        const decoded = jwt.verify(token, config.secret) as JwtPayload
+      } catch (err) {
+        return res
+          .status(400)
+          .json({ message: "Token expired. Please make a new sign in request" }) // bad token
+      }
     } else {
-      return res.sendStatus(400) // bad token
+      return res
+        .send(400)
+        .json({ message: "Bad token. Please check your Authorization header." }) // bad token
     }
   } else {
     return res.sendStatus(401) // missing header

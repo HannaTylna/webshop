@@ -1,8 +1,14 @@
 import { Request, Response } from "express"
-import { UserModel } from "../models/users"
-import { Credentials, User } from "@webshop/shared"
-import { createJwtToken, JwtRequest } from "../middleware/auth"
+import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
+
+import { Credentials, User } from "@webshop/shared"
+
+import { UserModel } from "../models/users"
+import { JwtRequest, JwtResponse, JwtPayload } from "../middleware/auth"
+import { config } from "../config/auth"
+
+const tokenList = new Map<string, JwtResponse>()
 
 export const loginUser = async (
   req: JwtRequest<Credentials>,
@@ -31,13 +37,30 @@ export const loginUser = async (
     return
   }
 
-  // Create JWT Token
-  const token: string = createJwtToken({
+  const userData = {
     username: user.username,
     userid: user._id,
+  }
+
+  // Create JWT Token
+  const token: string = jwt.sign(userData, config.secret, {
+    expiresIn: config.tokenLife,
   })
 
-  res.json({ token: token })
+  // Create JWT Refresh Token
+  const refreshToken = jwt.sign(userData, config.refreshTokenSecret, {
+    expiresIn: config.refreshTokenLife,
+  })
+
+  const response: JwtResponse = {
+    token: token,
+    refreshToken: refreshToken,
+    userid: userData.userid as string,
+  }
+  // Store refresh token and user info in tokenList
+  tokenList.set(refreshToken, response)
+
+  res.json(response)
 }
 
 export const getUserInfo = async (
@@ -77,5 +100,56 @@ export const updateUserInfo = async (
     res.status(200).json(updateUser)
   } catch (error) {
     res.status(400).send(error)
+  }
+}
+
+export const refreshToken = async (
+  req: JwtRequest<Credentials>,
+  res: Response
+) => {
+  const refreshToken: string = req.body?.refreshToken
+
+  if (refreshToken == null) {
+    return res.status(403).json({ message: "Refresh Token is required!" })
+  }
+
+  try {
+    // Check if refreshToken is in tokenList
+    if (!tokenList.has(refreshToken)) {
+      res.status(403).json({ message: "Refresh token is not in database!" })
+      return
+    }
+
+    let decoded: JwtPayload
+    // Verify refreshToken expiration time has not passed
+    try {
+      decoded = jwt.verify(
+        refreshToken,
+        config.refreshTokenSecret
+      ) as JwtPayload
+    } catch (err) {
+      return res.status(400).json({
+        message: "Refresh Token expired. Please make a new sign in request",
+      })
+    }
+
+    // Get user information to create a new token
+    const userData = {
+      username: decoded.username,
+      userid: decoded.userid,
+    }
+
+    // Create new access token
+    const token: string = jwt.sign(userData, config.secret, {
+      expiresIn: config.tokenLife,
+    })
+
+    // Return new values
+    return res.status(200).json({
+      token: token,
+      refreshToken: refreshToken,
+    })
+  } catch (err) {
+    return res.status(500).send({ message: err })
   }
 }
