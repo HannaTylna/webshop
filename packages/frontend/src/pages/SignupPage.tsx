@@ -29,19 +29,72 @@ export default function SignupPage() {
     }
 
   return (
-    <div>
-        <div>SignupPage</div>
-        <label htmlFor="usernameInput">Username</label>
-        <input id='usernameInput' type="text" value={username} onChange={e => setUsername(e.target.value)} />
-        <br />
-        <label htmlFor="emailInput">email</label>
-        <input id='emailInput' type="text" value={email} onChange={e => setEmail(e.target.value)} />
-        <br />
-        <label htmlFor="passwordInput">Password</label>
-        <input id='passwordInput' type="password" value={password} onChange={e => setPassword(e.target.value)} />
-        <br />
-        <button type="submit" onClick={handleOnClick}>Sign in</button>
-    </div>
-    
+    <section className="vh-100 gradient-custom">
+        <div className="container py-5 h-100">
+            <div className="row d-flex justify-content-center align-items-center h-100">
+                <div className="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div className="card text-dark">
+                        <div className="card-body p-5 text-center">
+                            <div className="mb-md-4 mt-md-4 pb-5">
+                                <h2 className="fw-bold mb-2 text-uppercase">Sign up</h2>
+                                <div className="form-outline form-white mb-4">
+                                    <input
+                                        type="text"
+                                        id="username"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        className="form-control form-control-lg"
+                                    />
+                                    <label className="form-label" htmlFor="username">
+                                        Username
+                                    </label>
+                                </div>
+
+                                <div className="form-outline form-white mb-4">
+                                    <input
+                                        type="text"
+                                        id="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="form-control form-control-lg"
+                                    />
+                                    <label className="form-label" htmlFor="useremailname">
+                                        Email
+                                    </label>
+                                </div>
+
+                                <div className="form-outline form-white mb-4">
+                                    <input
+                                        type="password"
+                                        id="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="form-control form-control-lg"
+                                    />
+                                    <label className="form-label" htmlFor="password">
+                                        Password
+                                    </label>
+                                </div>
+                                <button
+                                    className="btn btn-primary btn-lg px-5"
+                                    onClick={handleOnClick}
+                                    type="submit"
+                                >
+                                    sign up
+                                </button>
+                            </div>
+                            <div>
+                                {warning && (
+                                    <div className="alert alert-warning" role="alert">
+                                        {warning}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</section>    
   )
 }
