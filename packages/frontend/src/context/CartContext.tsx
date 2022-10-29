@@ -82,6 +82,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         decreaseCartQuantity,
         cartItems,
         cartQuantity,
+        openCart,
+        closeCart,
       }}
     >
       {children}

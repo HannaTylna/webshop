@@ -3,8 +3,10 @@ import { Navbar as NavbarBs, Nav, Container, Button } from "react-bootstrap"
 import { NavLink } from "react-router-dom"
 import cakelogo from "../images/cakelogo.jpg"
 import avatar from "../images/avatar.jpg"
+import { useCart } from "../context/CartContext"
 
 export default function Navbar() {
+  const { openCart, cartQuantity } = useCart()
   return (
     <NavbarBs
       className="bg-white shadow-sm mb-3 sticky-top p-4"
@@ -32,6 +34,7 @@ export default function Navbar() {
         </NavbarBs.Brand>
         <Nav className="d-flex justify-content-center align-items-center">
           <Button
+            onClick={openCart}
             style={{
               width: "3rem",
               height: "3rem",
@@ -60,7 +63,7 @@ export default function Navbar() {
                 transform: "translate(25%,25%)",
               }}
             >
-              0
+              {cartQuantity}
             </div>
           </Button>
           <Nav.Link as={NavLink} to="/profile">
