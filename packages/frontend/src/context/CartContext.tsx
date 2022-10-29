@@ -23,6 +23,26 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
+
+  const getItemQuantity = (id: string) => {
+    return cartItems.find((item) => item.id === id)?.quantity || 0
+  }
+
+  const increaseCartQuantity = (id: string) => {
+    setCartItems((currItems) => {
+      if (currItems.find((item) => item.id === id) == null) {
+        return [...currItems, { id, quantity: 1 }]
+      } else {
+        return currItems.map((item) => {
+          if (item.id === id) {
+            return { ...item, quantity: item.quantity + 1 }
+          } else {
+            return item
+          }
+        })
+      }
+    })
+  }
   return (
     <CartContext.Provider
     >
