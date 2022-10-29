@@ -1,5 +1,14 @@
 import { useContext, createContext, ReactNode, useState } from "react"
 // import {OrderItem} from "@webshop/shared"
+
+type CartProviderProps = {
+  children: ReactNode
+}
+type CartItem = {
+  id: string
+  quantity: number
+}
+
 type CartContextType = {
   getItemQuantity: (id: string) => number
   increaseCartQuantity: (id: string) => void
@@ -13,6 +22,7 @@ export const useCart = () => {
 }
 
 export const CartProvider = ({ children }: CartProviderProps) => {
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
   return (
     <CartContext.Provider
     >
