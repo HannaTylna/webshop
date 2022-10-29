@@ -5,8 +5,18 @@ type CartContextType = {
   increaseCartQuantity: (id: string) => void
   decreaseCartQuantity: (id: string) => void
 }
+
 const CartContext = createContext({} as CartContextType)
 
 export const useCart = () => {
   return useContext(CartContext)
+}
+
+export const CartProvider = ({ children }: CartProviderProps) => {
+  return (
+    <CartContext.Provider
+    >
+      {children}
+    </CartContext.Provider>
+  )
 }
