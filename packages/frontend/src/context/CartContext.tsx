@@ -1,4 +1,5 @@
 import { useContext, createContext, ReactNode, useState } from "react"
+import Cart from "../components/Cart"
 // import {OrderItem} from "@webshop/shared"
 
 type CartProviderProps = {
@@ -87,6 +88,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       }}
     >
       {children}
+      <Cart isOpen={isOpen} />
     </CartContext.Provider>
   )
 }
