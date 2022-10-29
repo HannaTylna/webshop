@@ -10,6 +10,8 @@ type CartItem = {
 }
 
 type CartContextType = {
+  openCart: () => void
+  closeCart: () => void
   getItemQuantity: (id: string) => number
   increaseCartQuantity: (id: string) => void
   decreaseCartQuantity: (id: string) => void
@@ -25,6 +27,12 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [isOpen, setIsOpen] = useState(false)
+
+  const openCart = () => setIsOpen(true)
+
+  const closeCart = () => setIsOpen(false)
+
   const cartQuantity = cartItems.reduce(
     (quantity, item) => item.quantity + quantity,
     0
