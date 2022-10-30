@@ -3,6 +3,7 @@ import axios from "axios"
 import { Product } from "@webshop/shared"
 import { Row } from "react-bootstrap"
 import ProductList from "../components/ProductList"
+import Search from "../components/Search"
 
 export default function Homepage() {
   const [products, setProducts] = useState<Product[]>([])
@@ -20,6 +21,7 @@ export default function Homepage() {
 
   return (
     <>
+      <Search />
       <Row md={2} xs={1} lg={3} className="g-3">
         <ProductList products={products} />
       </Row>
