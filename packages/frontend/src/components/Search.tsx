@@ -1,7 +1,7 @@
 import { Product } from "@webshop/shared"
 import axios from "axios"
 import React, { useState } from "react"
-import { Col, InputGroup, Modal, Row } from "react-bootstrap"
+import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap"
 
 export default function Search() {
   const [searchText, setSearchText] = useState<string>("")
@@ -19,20 +19,23 @@ export default function Search() {
   return (
     <Row>
       <Col md={{ offset: 9 }} className="mb-5">
-        <input
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          placeholder="search by title"
-        ></input>
-        <button
-          type="submit"
-          onClick={() => {
-            onSearch(searchText)
-            handleShow()
-          }}
-        >
-          search
-        </button>
+        <Form className="d-flex">
+          <Form.Control
+            type="search"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            placeholder="search by title"
+          />
+          <Button
+            variant="outline-success"
+            onClick={() => {
+              onSearch(searchText)
+              handleShow()
+            }}
+          >
+            search
+          </Button>
+        </Form>
       </Col>
       <Modal show={show} onHide={handleClose}>
         {filteredProducts.length !== 0 ? (
