@@ -59,24 +59,54 @@ export default function UserPage() {
           <Form>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>First name:</Form.Label>
-              <Form.Control type="text" value={userFirstName} />
+              <Form.Control
+                type="text"
+                value={userFirstName}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> }
+                }) => setUpdateFirstName(e.target.value)}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicLastName">
               <Form.Label>Last name:</Form.Label>
-              <Form.Control type="text" value={userLastName} />
+              <Form.Control
+                type="text"
+                value={userLastName}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> }
+                }) => setUpdateLastName(e.target.value)}
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email:</Form.Label>
-              <Form.Control type="email" value={userEmail} />
+              <Form.Control
+                type="email"
+                value={userEmail}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> }
+                }) => setUpdateEmail(e.target.value)}
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPhone">
               <Form.Label>Phone number:</Form.Label>
-              <Form.Control type="text" value={userPhoneNumber} />
+              <Form.Control
+                type="text"
+                value={userPhoneNumber}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> }
+                }) => setUpdatePhoneNumber(e.target.value)}
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicAddress">
               <Form.Label>Delivery address:</Form.Label>
-              <Form.Control type="text" value={userDeliveryAddress} />
+              <Form.Control
+                type="text"
+                value={userDeliveryAddress}
+                onChange={(e: {
+                  target: { value: React.SetStateAction<string> }
+                }) => setUpdateDeliveryAddress(e.target.value)}
+              />
             </Form.Group>
 
             <Button variant="primary" type="submit">
