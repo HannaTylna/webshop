@@ -32,6 +32,7 @@ export function authenticateJwtTokenMiddleware(
     if (token) {
       try {
         const decoded = jwt.verify(token, config.secret) as JwtPayload
+        req.jwt = decoded
       } catch (err) {
         return res
           .status(400)
