@@ -14,6 +14,12 @@ export default function UserPage() {
   const [userPhoneNumber, setUserPhoneNumber] = useState("")
   const [userDeliveryAddress, setUserDeliveryAddress] = useState("")
 
+  const [updateFirstName, setUpdateFirstName] = useState("")
+  const [updateLastName, setUpdateLastName] = useState("")
+  const [updateEmail, setUpdateEmail] = useState<string>("")
+  const [updatePhone, setUpdatePhoneNumber] = useState<string>("")
+  const [updateAddress, setUpdateDeliveryAddress] = useState<string>("")
+
   const navigate = useNavigate()
   const token = localStorage.getItem("webshop")
   console.log(token)
