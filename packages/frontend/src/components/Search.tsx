@@ -15,14 +15,12 @@ export default function Search() {
     setSearchText("")
     return filteredProducts
   }
-  console.log(filteredProducts.length)
+
   return (
     <Row>
       <Col md={{ offset: 9 }} className="mb-5">
         <input
           value={searchText}
-          name="q"
-          type="search"
           onChange={(e) => setSearchText(e.target.value)}
           placeholder="search by title"
         ></input>
@@ -48,7 +46,11 @@ export default function Search() {
                 <Modal.Body key={product._id}>
                   <img
                     src={Object.values(product?.images)[1].small}
-                    style={{ objectFit: "cover" }}
+                    style={{
+                      width: "200px",
+                      height: "200px",
+                      objectFit: "cover",
+                    }}
                     alt={product.title}
                   />
                 </Modal.Body>
