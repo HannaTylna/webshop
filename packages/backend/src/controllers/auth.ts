@@ -38,6 +38,11 @@ export const loginUser = async (
   }
 
   const userData = {
+    email: user.email,
+    phoneNumber: user.phoneNumber,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    deliveryAddress: user.deliveryAddress,
     username: user.username,
     userid: user._id,
   }
