@@ -1,28 +1,45 @@
 import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import avatar from "../images/avatar.jpg"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
-import { User } from "@webshop/shared"
 import axios from "axios"
 
-const getUser = async (): Promise<User> => {
-  const response = await axios.get<User>("/api/info")
-  return response.data
-}
-
 export default function UserPage() {
-  const [user, setUser] = useState<User>()
+  const [userFirstName, setUserFirstName] = useState("")
+  const [userLastName, setUserLastName] = useState("")
+  const [userEmail, setUserEmail] = useState("")
+  const [userPhoneNumber, setUserPhoneNumber] = useState("")
+  const [userDeliveryAddress, setUserDeliveryAddress] = useState("")
 
-  useEffect(() => {
-    const token = localStorage.getItem("chatapp")
-    console.log(token)
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
+  const navigate = useNavigate()
+  const token = localStorage.getItem("webshop")
+  console.log(token)
+
+  const getCurrentUser = async () => {
+    try {
+      const response = await axios.get("/api/user/info", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      setUserFirstName(response.data.firstName)
+      setUserLastName(response.data.lastName)
+      setUserEmail(response.data.email)
+      setUserPhoneNumber(response.data.phoneNumber)
+      setUserDeliveryAddress(response.data.deliveryAddress)
+    } catch (error) {
+      console.log(error)
     }
-    console.log(config)
-    axios.get("/api/info", config).then(console.log).catch(console.log)
+  }
+  useEffect(() => {
+    if (token) {
+      getCurrentUser()
+    } else {
+      navigate("/signin")
+    }
   }, [])
 
   return (
@@ -36,24 +53,24 @@ export default function UserPage() {
           <Form>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>First name:</Form.Label>
-              <Form.Control type="text" />
+              <Form.Control type="text" value={userFirstName} />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicLastName">
               <Form.Label>Last name:</Form.Label>
-              <Form.Control type="text" />
+              <Form.Control type="text" value={userLastName} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email:</Form.Label>
-              <Form.Control type="email" value={user?.email} />
+              <Form.Control type="email" value={userEmail} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPhone">
               <Form.Label>Phone number:</Form.Label>
-              <Form.Control type="text" />
+              <Form.Control type="text" value={userPhoneNumber} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicAddress">
               <Form.Label>Delivery address:</Form.Label>
-              <Form.Control type="text" />
+              <Form.Control type="text" value={userDeliveryAddress} />
             </Form.Group>
 
             <Button variant="primary" type="submit">
