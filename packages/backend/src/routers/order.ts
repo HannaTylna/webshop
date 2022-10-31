@@ -1,5 +1,5 @@
 import express, { Router } from "express"
-import { loadAll, submit, saveCart } from "../controllers/order"
+import { loadAll, loadCart, submit, saveCart } from "../controllers/order"
 import { authenticateJwtTokenMiddleware } from "../middleware/auth"
 
 const ordersRouter: Router = express.Router()
@@ -13,6 +13,7 @@ ordersRouter.post("/", submit)
 
 // Save cart to orders
 ordersRouter.use("/cart", authenticateJwtTokenMiddleware)
+ordersRouter.get("/cart", loadCart)
 ordersRouter.post("/cart", saveCart)
 ordersRouter.patch("/cart", saveCart)
 
