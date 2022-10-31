@@ -21,7 +21,6 @@ export default function Search() {
       <Col md={{ offset: 9 }} className="mb-5">
         <Form className="d-flex">
           <Form.Control
-            type="search"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             placeholder="search by title"
@@ -41,12 +40,12 @@ export default function Search() {
         {filteredProducts.length !== 0 ? (
           filteredProducts.map((product) => {
             return (
-              <>
+              <li key={product._id} style={{ listStyle: "none" }}>
                 <Modal.Header>
                   <h5>{product.title}</h5>
                 </Modal.Header>
 
-                <Modal.Body key={product._id}>
+                <Modal.Body>
                   <img
                     src={Object.values(product?.images)[1].small}
                     style={{
@@ -61,7 +60,7 @@ export default function Search() {
                   <p>price: {product.price}</p>
                   <p>weight: {product.weight}</p>
                 </Modal.Footer>
-              </>
+              </li>
             )
           })
         ) : (
