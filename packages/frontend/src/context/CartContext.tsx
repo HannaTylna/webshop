@@ -42,7 +42,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<Order[]>([])
   const [cartItems, setCartItems] = useState<OrderItem[]>([])
   const [isOpen, setIsOpen] = useState(false)
-  const [error, setError] = useState<string | undefined>()
 
   const openCart = () => setIsOpen(true)
 
@@ -61,7 +60,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       setCartItems(cart[0]?.products || [])
     } catch (err) {
       setCart([])
-      setError("Something went wrong when saving cart...")
+      console.log("Something went wrong when saving cart...")
     }
   }
 
@@ -71,8 +70,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       const response = await axios.get<Order[]>("api/orders/cart", headers)
       setCart(response.data)
     } catch (err) {
-      // setCart([])
-      // setError("Something went wrong when saving cart...")
       console.log(err)
     }
   }
@@ -99,8 +96,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const decreaseCartQuantity = (id: string) => {
     setCartItems((currItems) => {
-      if (currItems.find((item) => item.productId === id)?.quantity == 1) {
-        return currItems.filter((item) => item.productId != id)
+      if (currItems.find((item) => item.productId === id)?.quantity === 1) {
+        return currItems.filter((item) => item.productId !== id)
       } else {
         return currItems.map((item) => {
           if (item.productId === id) {

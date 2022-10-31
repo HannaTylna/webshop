@@ -14,7 +14,6 @@ export default function Homepage() {
   useEffect(() => {
     getProducts()
   }, [])
-  console.log(products)
   return (
     <>
       <Row md={2} xs={1} lg={3} className="g-3">
