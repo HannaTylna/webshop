@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 import avatar from "../images/avatar.jpg"
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
@@ -20,36 +19,34 @@ export default function UserPage() {
   const [updatePhone, setUpdatePhoneNumber] = useState<string>("")
   const [updateAddress, setUpdateDeliveryAddress] = useState<string>("")
 
-  const navigate = useNavigate()
-  const token = localStorage.getItem("webshop")
-  console.log(token)
+  const [error, setError] = useState<string>("")
 
   const getCurrentUser = async () => {
     try {
-      const response = await axios.get("/api/user/info", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const response = await axios.get("/api/user/info")
       setUserFirstName(response.data.firstName)
       setUserLastName(response.data.lastName)
       setUserEmail(response.data.email)
       setUserPhoneNumber(response.data.phoneNumber)
       setUserDeliveryAddress(response.data.deliveryAddress)
-    } catch (error) {
-      console.log(error)
+      setError("")
+    } catch (err) {
+      setError(error)
     }
   }
   useEffect(() => {
-    if (token) {
-      getCurrentUser()
-    } else {
-      navigate("/signin")
-    }
+    getCurrentUser()
   }, [])
 
   return (
     <>
+      <div>
+        {
+          <div className="alert alert-warning" role="alert">
+            You need to login!
+          </div>
+        }
+      </div>
       <h1 className="text-center">User page</h1>
       <Row>
         <Col sm={5}>
