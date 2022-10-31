@@ -58,11 +58,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
     try {
       await axios.post("api/orders/cart", cartItems, headers)
-      // const response = await axios.get<Order[]>("/orders")
-      //setCart(response.data)
+      const response = await axios.get<Order[]>("api/orders/cart", headers)
+      setCart(response.data)
     } catch (err) {
-      // setCart([])
-      setError("Something went wrong when fetching cart...")
+      setCart([])
+      setError("Something went wrong when saving cart...")
     }
   }
 
@@ -102,7 +102,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     })
   }
 
-  console.log("cartItems", cartItems)
+  console.log("cart", cart)
 
   useEffect(() => {
     createCart(cartItems)
