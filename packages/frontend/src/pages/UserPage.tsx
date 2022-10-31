@@ -7,17 +7,11 @@ import Col from "react-bootstrap/Col"
 import axios from "axios"
 
 export default function UserPage() {
-  const [userFirstName, setUserFirstName] = useState("")
-  const [userLastName, setUserLastName] = useState("")
-  const [userEmail, setUserEmail] = useState("")
-  const [userPhoneNumber, setUserPhoneNumber] = useState("")
-  const [userDeliveryAddress, setUserDeliveryAddress] = useState("")
-
-  const [updateFirstName, setUpdateFirstName] = useState("")
-  const [updateLastName, setUpdateLastName] = useState("")
-  const [updateEmail, setUpdateEmail] = useState<string>("")
-  const [updatePhone, setUpdatePhoneNumber] = useState<string>("")
-  const [updateAddress, setUpdateDeliveryAddress] = useState<string>("")
+  const [userFirstName, setUserFirstName] = useState<string>("")
+  const [userLastName, setUserLastName] = useState<string>("")
+  const [userEmail, setUserEmail] = useState<string>("")
+  const [userPhoneNumber, setUserPhoneNumber] = useState<string>("")
+  const [userDeliveryAddress, setUserDeliveryAddress] = useState<string>("")
 
   const [error, setError] = useState<string>("")
 
@@ -39,16 +33,17 @@ export default function UserPage() {
     e.preventDefault()
     try {
       const response = await axios.patch("/api/user/info", {
-        firstName: updateFirstName ? updateFirstName : userFirstName,
-        lastName: updateLastName ? updateLastName : userLastName,
-        email: updateEmail ? updateEmail : userEmail,
-        deliveryAddress: updateAddress ? updateAddress : userDeliveryAddress,
-        phoneNumber: updatePhone ? updatePhone : userPhoneNumber,
+        firstName: userFirstName,
+        lastName: userLastName,
+        email: userEmail,
+        deliveryAddress: userDeliveryAddress,
+        phoneNumber: userPhoneNumber,
       })
       console.log(response)
     } catch (error) {
       console.log(error)
     }
+    window.location.reload()
   }
 
   useEffect(() => {
@@ -57,7 +52,7 @@ export default function UserPage() {
 
   return (
     <>
-      <h1 className="text-center">User page</h1>
+      <h1 className="text-center">User profile</h1>
       <Row>
         <Col sm={5}>
           <img src={avatar} alt="profile avatar" height={250} width={250} />
@@ -68,10 +63,10 @@ export default function UserPage() {
               <Form.Label>First name:</Form.Label>
               <Form.Control
                 type="text"
-                value={updateFirstName}
+                value={userFirstName}
                 onChange={(e: {
                   target: { value: React.SetStateAction<string> }
-                }) => setUpdateFirstName(e.target.value)}
+                }) => setUserFirstName(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicLastName">
@@ -81,7 +76,7 @@ export default function UserPage() {
                 value={userLastName}
                 onChange={(e: {
                   target: { value: React.SetStateAction<string> }
-                }) => setUpdateLastName(e.target.value)}
+                }) => setUserLastName(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -91,7 +86,7 @@ export default function UserPage() {
                 value={userEmail}
                 onChange={(e: {
                   target: { value: React.SetStateAction<string> }
-                }) => setUpdateEmail(e.target.value)}
+                }) => setUserEmail(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPhone">
@@ -101,7 +96,7 @@ export default function UserPage() {
                 value={userPhoneNumber}
                 onChange={(e: {
                   target: { value: React.SetStateAction<string> }
-                }) => setUpdatePhoneNumber(e.target.value)}
+                }) => setUserPhoneNumber(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicAddress">
@@ -111,7 +106,7 @@ export default function UserPage() {
                 value={userDeliveryAddress}
                 onChange={(e: {
                   target: { value: React.SetStateAction<string> }
-                }) => setUpdateDeliveryAddress(e.target.value)}
+                }) => setUserDeliveryAddress(e.target.value)}
               />
             </Form.Group>
 
