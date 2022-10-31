@@ -29,7 +29,7 @@ const ProductRow = (props: { product: Product }) => {
             {quantity === 0 ? (
               <Button
                 className="w-100"
-                onClick={() => increaseCartQuantity(id)}
+                onClick={() => increaseCartQuantity(id, price)}
               >
                 {" "}
                 + Add to cart
@@ -40,7 +40,9 @@ const ProductRow = (props: { product: Product }) => {
                 <div>
                   <span className="fs-5 m-1">{quantity} in cart</span>
                 </div>
-                <Button onClick={() => increaseCartQuantity(id)}>+</Button>
+                <Button onClick={() => increaseCartQuantity(id, price)}>
+                  +
+                </Button>
               </div>
             )}
           </div>
