@@ -1,17 +1,29 @@
-import React from "react"
+import React, { useState } from "react"
 import { Navbar as NavbarBs, Nav, Container, Button } from "react-bootstrap"
 import { NavLink } from "react-router-dom"
 import cakelogo from "../images/cakelogo.jpg"
 import avatar from "../images/avatar.jpg"
 
 export default function Navbar() {
+  const [isInlogged, setIsInlogged] = useState<boolean>(false)
+
+  const logout = (): void => {
+    localStorage.clear()
+    setIsInlogged(true)
+  }
+
   return (
     <NavbarBs sticky="top" className="bg-white shadow-sm mb-3 p-4">
       <Container>
         <Nav className="d-flex justify-content-center align-items-center">
-          <Nav.Link as={NavLink} to="/login">
-            login
-          </Nav.Link>
+          {isInlogged ? (
+            <Button onClick={logout}>log out</Button>
+          ) : (
+            <Nav.Link as={NavLink} to="/login">
+              log in
+            </Nav.Link>
+          )}
+
           <Nav.Link as={NavLink} to="/signup">
             signup
           </Nav.Link>

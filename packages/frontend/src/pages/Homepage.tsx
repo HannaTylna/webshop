@@ -4,6 +4,8 @@ import { Product } from "@webshop/shared"
 import { Row } from "react-bootstrap"
 import ProductList from "../components/ProductList"
 import Search from "../components/Search"
+import SortByCategory from "../components/SortByCategory"
+import { access } from "fs"
 
 export default function Homepage() {
   const [products, setProducts] = useState<Product[]>([])
@@ -22,6 +24,7 @@ export default function Homepage() {
   return (
     <>
       <Search />
+      <SortByCategory products={products} />
       <Row md={2} xs={1} lg={3} className="g-3">
         <ProductList products={products} />
       </Row>
