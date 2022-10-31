@@ -22,6 +22,7 @@ type CartContextType = {
   cartQuantity: number
   cartItems: OrderItem[]
   cart: Order[]
+  buyProducts: (deliveryAddress: string) => void
 }
 
 const CartContext = createContext({} as CartContextType)
@@ -112,6 +113,18 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     })
   }
 
+  const buyProducts = async (deliveryAddress: string): Promise<void> => {
+    const payload = {
+      deliveryAddress: deliveryAddress,
+    }
+    try {
+      await axios.post("api/orders/", payload, headers)
+      fetchCart()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   useEffect(() => {
     fetchCart()
   }, [])
@@ -131,6 +144,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         openCart,
         closeCart,
         cart,
+        buyProducts,
       }}
     >
       {children}
