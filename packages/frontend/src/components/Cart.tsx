@@ -13,13 +13,15 @@ const Cart = ({ isOpen }: CartProps) => {
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>Cart</Offcanvas.Title>
       </Offcanvas.Header>
-      <Offcanvas.Body>
-        <Stack gap={3}>
-          {cartItems.map((item) => (
-            <CartItem key={item.id} {...item} />
-          ))}
-        </Stack>
-      </Offcanvas.Body>
+      {cartItems && (
+        <Offcanvas.Body>
+          <Stack gap={3}>
+            {cartItems.map((item) => (
+              <CartItem key={item.productId} {...item} />
+            ))}
+          </Stack>
+        </Offcanvas.Body>
+      )}
     </Offcanvas>
   )
 }
