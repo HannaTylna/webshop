@@ -9,6 +9,7 @@ export default function Homepage() {
   const getProducts = async (): Promise<Product[]> => {
     const response = await axios.get<Product[]>("/api/products")
     setProducts(response.data)
+    localStorage.setItem("products", JSON.stringify(response.data))
     return products
   }
   useEffect(() => {
