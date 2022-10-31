@@ -12,8 +12,7 @@ export default function UserPage() {
   const [userEmail, setUserEmail] = useState<string>("")
   const [userPhoneNumber, setUserPhoneNumber] = useState<string>("")
   const [userDeliveryAddress, setUserDeliveryAddress] = useState<string>("")
-
-  const [error, setError] = useState<string>("")
+  const [errorMessage, setErrorMessage] = useState("")
 
   const getCurrentUser = async () => {
     try {
@@ -23,9 +22,8 @@ export default function UserPage() {
       setUserEmail(response.data.email)
       setUserPhoneNumber(response.data.phoneNumber)
       setUserDeliveryAddress(response.data.deliveryAddress)
-      setError("")
-    } catch (err) {
-      setError(error)
+    } catch (error) {
+      setErrorMessage("Please login!")
     }
   }
 
@@ -41,9 +39,10 @@ export default function UserPage() {
       })
       console.log(response)
     } catch (error) {
-      console.log(error)
+      console.log("Something went wrong!")
     }
     window.location.reload()
+    alert("Data is successful saved!")
   }
 
   useEffect(() => {
@@ -58,6 +57,12 @@ export default function UserPage() {
           <img src={avatar} alt="profile avatar" height={250} width={250} />
         </Col>
         <Col sm={7}>
+          {errorMessage && (
+            <p className="alert alert-warning" role="alert">
+              {" "}
+              {errorMessage}{" "}
+            </p>
+          )}
           <Form onSubmit={handleOnUpdate}>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>First name:</Form.Label>
