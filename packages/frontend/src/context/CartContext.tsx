@@ -21,6 +21,7 @@ type CartContextType = {
   decreaseCartQuantity: (id: string) => void
   cartQuantity: number
   cartItems: OrderItem[]
+  cart: Order[]
 }
 
 const CartContext = createContext({} as CartContextType)
@@ -136,6 +137,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         cartQuantity,
         openCart,
         closeCart,
+        cart,
       }}
     >
       {children}
