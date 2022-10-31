@@ -32,7 +32,8 @@ export const useCart = () => {
 }
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5hdCIsInVzZXJpZCI6IjYzNTgzM2FjNjIwZTNhM2JhM2EwN2JiMyIsImlhdCI6MTY2NzIwOTAyMywiZXhwIjoxNjY3Mjk1NDIzfQ.h2Sw3CVXXEIuFNyt0JN-lDtw2tP_r11OHjv6X32fm50"
+  //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5hdCIsInVzZXJpZCI6IjYzNTgzM2FjNjIwZTNhM2JhM2EwN2JiMyIsImlhdCI6MTY2NzIwOTAyMywiZXhwIjoxNjY3Mjk1NDIzfQ.h2Sw3CVXXEIuFNyt0JN-lDtw2tP_r11OHjv6X32fm50"
+  localStorage.getItem("webshop")
 
 export const headers = {
   headers: { Authorization: `Bearer ${token}` },
