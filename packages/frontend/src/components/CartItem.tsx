@@ -1,10 +1,9 @@
 import { Stack, Button } from "react-bootstrap"
+import { OrderItem } from "@webshop/shared"
+import { useCart } from "../context/CartContext"
 
-type CartItemProps = {
-  id: string
-  quantity: number
-}
-const CartItem = ({ id, quantity }: CartItemProps) => {
+const CartItem = ({ productId, quantity, price }: OrderItem) => {
+  const { increaseCartQuantity, decreaseCartQuantity } = useCart()
   return (
     <Stack direction="horizontal" gap={2} className="d-flex align-items-center">
       {/* <img
@@ -13,16 +12,17 @@ const CartItem = ({ id, quantity }: CartItemProps) => {
         alt={item.name}
       /> */}
       <div className="me-auto">
-        <div className="d-flex align-items-center">
-          <div>Item Name</div>
-          <div>{quantity}</div>
+        <div>Item Name</div>
+        <div className="text-muted">
+          {quantity} X {price}
         </div>
-        <div className="text-muted">Item Price</div>
       </div>
-      <div>Total sum</div>
+      <div>{price * quantity}</div>
       <div>
-        <Button>-</Button>
-        <Button>+</Button>
+        <Button onClick={() => decreaseCartQuantity(productId)}>-</Button>
+        <Button onClick={() => increaseCartQuantity(productId, price)}>
+          +
+        </Button>
       </div>
     </Stack>
   )
