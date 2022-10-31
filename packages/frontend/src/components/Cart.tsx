@@ -7,7 +7,8 @@ type CartProps = {
 }
 
 const Cart = ({ isOpen }: CartProps) => {
-  const { closeCart, cartItems } = useCart()
+  const { closeCart, cartItems, cart } = useCart()
+  const savedCart = cart[0] || {}
   return (
     <Offcanvas show={isOpen} onHide={closeCart} placement="end">
       <Offcanvas.Header closeButton>
@@ -19,6 +20,14 @@ const Cart = ({ isOpen }: CartProps) => {
             {cartItems.map((item) => (
               <CartItem key={item.productId} {...item} />
             ))}
+          </Stack>
+          <Stack gap={3}>
+            <div className="ms-auto fw-bold fs-5">
+              Shipping cost: {savedCart.shippingCost}
+            </div>
+            <div className="ms-auto fw-bold fs-5">
+              Total cost: {savedCart.totalCost}
+            </div>
           </Stack>
         </Offcanvas.Body>
       )}
