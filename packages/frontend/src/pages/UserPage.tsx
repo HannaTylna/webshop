@@ -34,37 +34,46 @@ export default function UserPage() {
       setError(error)
     }
   }
+
+  const handleOnUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      const response = await axios.patch("/api/user/info", {
+        firstName: updateFirstName ? updateFirstName : userFirstName,
+        lastName: updateLastName ? updateLastName : userLastName,
+        email: updateEmail ? updateEmail : userEmail,
+        deliveryAddress: updateAddress ? updateAddress : userDeliveryAddress,
+        phoneNumber: updatePhone ? updatePhone : userPhoneNumber,
+      })
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     getCurrentUser()
   }, [])
 
   return (
     <>
-      <div>
-        {
-          <div className="alert alert-warning" role="alert">
-            You need to login!
-          </div>
-        }
-      </div>
       <h1 className="text-center">User page</h1>
       <Row>
         <Col sm={5}>
           <img src={avatar} alt="profile avatar" height={250} width={250} />
         </Col>
         <Col sm={7}>
-          <Form>
+          <Form onSubmit={handleOnUpdate}>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>First name:</Form.Label>
               <Form.Control
                 type="text"
-                value={userFirstName}
+                value={updateFirstName}
                 onChange={(e: {
                   target: { value: React.SetStateAction<string> }
                 }) => setUpdateFirstName(e.target.value)}
               />
             </Form.Group>
-
             <Form.Group className="mb-3" controlId="formBasicLastName">
               <Form.Label>Last name:</Form.Label>
               <Form.Control
