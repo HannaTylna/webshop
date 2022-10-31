@@ -17,8 +17,8 @@ export default function Search() {
   }
 
   return (
-    <Row>
-      <Col md={{ offset: 9 }} className="mb-5">
+    <>
+      <Col md={{ span: 4, offset: 4 }} className="mb-5">
         <Form className="d-flex">
           <Form.Control
             value={searchText}
@@ -67,6 +67,6 @@ export default function Search() {
           <Modal.Body>sorry, no product founded!</Modal.Body>
         )}
       </Modal>
-    </Row>
+    </>
   )
 }

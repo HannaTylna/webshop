@@ -23,8 +23,11 @@ export default function Homepage() {
 
   return (
     <>
-      <Search />
-      <SortByCategory products={products} />
+      <Row>
+        <Search />
+        <SortByCategory products={products} />
+      </Row>
+
       <Row md={2} xs={1} lg={3} className="g-3">
         <ProductList products={products} />
       </Row>
