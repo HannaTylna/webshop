@@ -1,4 +1,5 @@
 import { Offcanvas, Stack } from "react-bootstrap"
+import { useState } from "react"
 import { useCart } from "../context/CartContext"
 import CartItem from "../components/CartItem"
 
@@ -9,12 +10,14 @@ type CartProps = {
 const Cart = ({ isOpen }: CartProps) => {
   const { closeCart, cartItems, cart } = useCart()
   const savedCart = cart[0] || {}
+  const [address, setAddress] = useState<string>("")
   return (
     <Offcanvas show={isOpen} onHide={closeCart} placement="end">
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>Cart</Offcanvas.Title>
       </Offcanvas.Header>
       {cartItems && (
+      {cartItems.length > 0 && (
         <Offcanvas.Body>
           <Stack gap={3}>
             {cartItems.map((item) => (
@@ -28,6 +31,12 @@ const Cart = ({ isOpen }: CartProps) => {
             <div className="ms-auto fw-bold fs-5">
               Total cost: {savedCart.totalCost}
             </div>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter your delivery address ..."
+              onChange={(e) => setAddress(e.target.value)}
+            ></input>
           </Stack>
         </Offcanvas.Body>
       )}
