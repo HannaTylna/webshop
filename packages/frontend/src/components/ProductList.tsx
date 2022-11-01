@@ -1,12 +1,16 @@
 import { Product } from "@webshop/shared"
 import React from "react"
 import { Button, Card, Col } from "react-bootstrap"
+import { useCart } from "../context/CartContext"
 
 const ProductRow = (props: { product: Product }) => {
-  const { title, price, images } = props.product
+  const { title, price, images, _id } = props.product
+  const id = _id || ""
   const values = Object.values(images)
   const imageURL = values[1].large
-  let quantity
+  const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } =
+    useCart()
+  const quantity = getItemQuantity(id)
   return (
     <Col>
       <Card className="h-100">
@@ -23,14 +27,22 @@ const ProductRow = (props: { product: Product }) => {
           </Card.Title>
           <div className="mt-auto">
             {quantity === 0 ? (
-              <Button className="w-100"> + Add to cart</Button>
+              <Button
+                className="w-100"
+                onClick={() => increaseCartQuantity(id, price)}
+              >
+                {" "}
+                + Add to cart
+              </Button>
             ) : (
               <div className="d-flex align-items-center justify-content-center style={{gap:'.5rem'}}">
-                <Button>-</Button>
+                <Button onClick={() => decreaseCartQuantity(id)}>-</Button>
                 <div>
                   <span className="fs-5 m-1">{quantity} in cart</span>
                 </div>
-                <Button>+</Button>
+                <Button onClick={() => increaseCartQuantity(id, price)}>
+                  +
+                </Button>
               </div>
             )}
           </div>

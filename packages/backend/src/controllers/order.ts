@@ -1,5 +1,5 @@
 import { Response, Request } from "express"
-import { getAllOrders, saveOrder, OrderModel } from "../models/order"
+import { getAllOrders, getCart, saveOrder, OrderModel } from "../models/order"
 import { Order, OrderItem } from "@webshop/shared"
 import { JwtRequest } from "../middleware/auth"
 
@@ -11,6 +11,20 @@ export const loadAll = async (
     const userId: string | undefined = req.jwt?.userid
     const orders = await getAllOrders(userId)
     res.status(200).json(orders)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
+
+export const loadCart = async (
+  req: JwtRequest<string>,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId: string | undefined = req.jwt?.userid
+    const status: string = "cart"
+    const cart = await getCart(userId, status)
+    res.status(200).json(cart)
   } catch (error) {
     res.status(400).json(error)
   }

@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap"
 import { Routes, Route } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import Homepage from "./pages/Homepage"
+import { CartProvider } from "./context/CartContext"
 import UserPage from "./pages/UserPage"
 import SigninPage from "./pages/SigninPage"
 import SignupPage from "./pages/SignupPage"
@@ -24,7 +25,7 @@ axios.interceptors.request.use((config) => {
 
 function App() {
   return (
-    <>
+    <CartProvider>
       <Navbar />
       <Container>
         <Routes>
@@ -34,7 +35,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
         </Routes>
       </Container>
-    </>
+    </CartProvider>
   )
 }
 
