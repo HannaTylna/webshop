@@ -14,6 +14,7 @@ export default function Homepage() {
   }
   useEffect(() => {
     getProducts()
+    // eslint-disable-next-line
   }, [])
   return (
     <>
