@@ -2,6 +2,7 @@ import { Product } from "@webshop/shared"
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Col, Form, Modal } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 export default function SortByCategory(props: { products: Product[] }) {
   const [category, setCategory] = useState<string>("")
@@ -63,15 +64,17 @@ export default function SortByCategory(props: { products: Product[] }) {
                 </Modal.Header>
 
                 <Modal.Body>
-                  <img
-                    src={Object.values(product?.images)[1].small}
-                    style={{
-                      width: "200px",
-                      height: "200px",
-                      objectFit: "cover",
-                    }}
-                    alt={product.title}
-                  />
+                  <Link to={`/products/${product._id}`}>
+                    <img
+                      src={Object.values(product?.images)[1].small}
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        objectFit: "cover",
+                      }}
+                      alt={product.title}
+                    />
+                  </Link>
                 </Modal.Body>
                 <Modal.Footer>
                   <p>price: {product.price}</p>

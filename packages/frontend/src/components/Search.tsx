@@ -1,7 +1,8 @@
 import { Product } from "@webshop/shared"
 import axios from "axios"
 import React, { useState } from "react"
-import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap"
+import { Button, Col, Form, Modal } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 export default function Search() {
   const [searchText, setSearchText] = useState<string>("")
@@ -46,15 +47,17 @@ export default function Search() {
                 </Modal.Header>
 
                 <Modal.Body>
-                  <img
-                    src={Object.values(product?.images)[1].small}
-                    style={{
-                      width: "200px",
-                      height: "200px",
-                      objectFit: "cover",
-                    }}
-                    alt={product.title}
-                  />
+                  <Link to={`/products/${product._id}`}>
+                    <img
+                      src={Object.values(product?.images)[1].small}
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        objectFit: "cover",
+                      }}
+                      alt={product.title}
+                    />
+                  </Link>
                 </Modal.Body>
                 <Modal.Footer>
                   <p>price: {product.price}</p>
