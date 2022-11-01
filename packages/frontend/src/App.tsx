@@ -4,6 +4,8 @@ import { Container } from "react-bootstrap"
 import { Routes, Route } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import Homepage from "./pages/Homepage"
+import SigninPage from "./pages/SigninPage"
+import SignupPage from "./pages/SignupPage"
 
 axios.defaults.baseURL =
   process.env.REACT_APP_WEBSHOP_API || "http://localhost:4000"
@@ -15,8 +17,9 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/signin" element={<SigninPage />} />
+          <Route path="/signup" element={<SignupPage />} />
         </Routes>
-        <h1>Webshop 💰</h1>
       </Container>
     </>
   )
