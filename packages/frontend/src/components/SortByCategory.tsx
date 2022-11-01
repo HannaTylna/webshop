@@ -21,11 +21,12 @@ export default function SortByCategory(props: { products: Product[] }) {
     },
     {}
   )
-
   const selectCategory = async () => {
-    console.log("category", category)
-    const response = await axios.get(`/api/products/categories/${category}`)
-    setProductsByCategory(response.data)
+    if (category) {
+      console.log("category", category)
+      const response = await axios.get(`/api/products/categories/${category}`)
+      setProductsByCategory(response.data)
+    }
   }
 
   useEffect(() => {
