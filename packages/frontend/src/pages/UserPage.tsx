@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import axios from "axios"
+import OrderComponent from "../components/OrderComponent"
 
 export default function UserPage() {
   const [userFirstName, setUserFirstName] = useState<string>("")
@@ -114,12 +115,14 @@ export default function UserPage() {
                 }) => setUserDeliveryAddress(e.target.value)}
               />
             </Form.Group>
-
             <Button variant="primary" type="submit">
               Update
             </Button>
           </Form>
         </Col>
+      </Row>
+      <Row>
+        <OrderComponent />
       </Row>
     </>
   )
