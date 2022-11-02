@@ -5,7 +5,6 @@ import { Row } from "react-bootstrap"
 import ProductList from "../components/ProductList"
 import Search from "../components/Search"
 import SortByCategory from "../components/SortByCategory"
-import { access } from "fs"
 
 export default function Homepage() {
   const [products, setProducts] = useState<Product[]>([])
@@ -19,6 +18,7 @@ export default function Homepage() {
   }
   useEffect(() => {
     getProducts()
+    // eslint-disable-next-line
   }, [])
 
   return (
