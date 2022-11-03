@@ -14,7 +14,8 @@ export default function Navbar() {
     if(localStorage.getItem('webshop')){
       setIsLoggedin(true)
     }
-  })
+    // eslint-disable-next-line
+  },[])
   return (
     <NavbarBs
       className="bg-white shadow-sm mb-3 sticky-top p-4"
