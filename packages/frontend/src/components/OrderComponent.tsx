@@ -26,7 +26,7 @@ export default function OrderComponent() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Delivery address</th>
+            <th>Products</th>
             <th>Total</th>
             <th>Status</th>
           </tr>
@@ -36,7 +36,17 @@ export default function OrderComponent() {
             orders.map((order, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{order.deliveryAddress}</td>
+                <td>
+                  <ul>
+                    {order.products &&
+                      order.products.map((item, index) => (
+                        <li key={index}>
+                          {item.productId} - {item.price} kr ({item.quantity}{" "}
+                          st)
+                        </li>
+                      ))}
+                  </ul>
+                </td>
                 <td>{order.totalCost} kr</td>
                 <td>{order.status}</td>
               </tr>
