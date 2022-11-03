@@ -23,6 +23,7 @@ export default function SigninPage() {
 		if (signinResponse && signinResponse.status === 200) {
 			localStorage.setItem("webshop", signinResponse.data.token);
 			navigate("/");
+			window.location.reload()
 		}
 	};
 
