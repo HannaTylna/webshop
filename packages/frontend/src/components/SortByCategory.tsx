@@ -32,6 +32,7 @@ export default function SortByCategory(props: { products: Product[] }) {
 
   useEffect(() => {
     selectCategory()
+    // eslint-disable-next-line
   }, [category])
 
   return (

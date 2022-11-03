@@ -1,7 +1,7 @@
 import { Product } from "@webshop/shared"
 import axios from "axios"
 import React, { useEffect, useState } from "react"
-import { Button, Col, Container, Row } from "react-bootstrap"
+import { Button, Col, Row } from "react-bootstrap"
 import { useParams } from "react-router-dom"
 
 export default function ProductPage() {
@@ -15,6 +15,7 @@ export default function ProductPage() {
       .catch((error) => {
         setError("something wrong when fetching product")
       })
+    // eslint-disable-next-line
   }, [])
   const getProduct = async (): Promise<Product> => {
     const response = await axios.get<Product>(`/api/products/${params.id}`)
