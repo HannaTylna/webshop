@@ -31,9 +31,7 @@ export const useCart = () => {
   return useContext(CartContext)
 }
 
-const token =
-  //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5hdCIsInVzZXJpZCI6IjYzNTgzM2FjNjIwZTNhM2JhM2EwN2JiMyIsImlhdCI6MTY2NzIwOTAyMywiZXhwIjoxNjY3Mjk1NDIzfQ.h2Sw3CVXXEIuFNyt0JN-lDtw2tP_r11OHjv6X32fm50"
-  localStorage.getItem("webshop")
+const token = localStorage.getItem("webshop")
 
 export const headers = {
   headers: { Authorization: `Bearer ${token}` },
@@ -54,6 +52,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   )
 
   const fetchCart = async (): Promise<void> => {
+    console.log("headers", headers)
+
     try {
       const response = await axios.get<Order[]>("api/orders/cart", headers)
       const cart = response.data
@@ -61,7 +61,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       setCartItems(cart[0]?.products || [])
     } catch (err) {
       setCart([])
-      console.log("Something went wrong when saving cart...")
+      console.log("Something went wrong when fetching the cart...")
     }
   }
 
