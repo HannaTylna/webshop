@@ -64,7 +64,7 @@ export default function UserPage() {
               {errorMessage}{" "}
             </p>
           )}
-          <Form onSubmit={handleOnUpdate}>
+          <Form className="mt-5" onSubmit={handleOnUpdate}>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>First name:</Form.Label>
               <Form.Control
@@ -121,7 +121,7 @@ export default function UserPage() {
           </Form>
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-5">
         <OrderComponent />
       </Row>
     </>
