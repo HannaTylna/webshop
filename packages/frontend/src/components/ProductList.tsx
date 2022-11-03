@@ -11,6 +11,7 @@ const ProductRow = (props: { product: Product }) => {
   const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } =
     useCart()
   const quantity = getItemQuantity(id)
+  const token = localStorage.getItem("webshop")
   return (
     <Col>
       <Card className="h-100">
@@ -25,27 +26,29 @@ const ProductRow = (props: { product: Product }) => {
             <span className="fs-6">{title}</span>
             <span className="ms-2 text-muted">{price} kr</span>
           </Card.Title>
-          <div className="mt-auto">
-            {quantity === 0 ? (
-              <Button
-                className="w-100"
-                onClick={() => increaseCartQuantity(id, price)}
-              >
-                {" "}
-                + Add to cart
-              </Button>
-            ) : (
-              <div className="d-flex align-items-center justify-content-center style={{gap:'.5rem'}}">
-                <Button onClick={() => decreaseCartQuantity(id)}>-</Button>
-                <div>
-                  <span className="fs-5 m-1">{quantity} in cart</span>
-                </div>
-                <Button onClick={() => increaseCartQuantity(id, price)}>
-                  +
+          {token && (
+            <div className="mt-auto">
+              {quantity === 0 ? (
+                <Button
+                  className="w-100"
+                  onClick={() => increaseCartQuantity(id, price)}
+                >
+                  {" "}
+                  + Add to cart
                 </Button>
-              </div>
-            )}
-          </div>
+              ) : (
+                <div className="d-flex align-items-center justify-content-center style={{gap:'.5rem'}}">
+                  <Button onClick={() => decreaseCartQuantity(id)}>-</Button>
+                  <div>
+                    <span className="fs-5 m-1">{quantity} in cart</span>
+                  </div>
+                  <Button onClick={() => increaseCartQuantity(id, price)}>
+                    +
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
         </Card.Body>
       </Card>
     </Col>
