@@ -54,7 +54,7 @@ export default function UserPage() {
     <>
       <h1 className="text-center">User profile</h1>
       <Row>
-        <Col sm={5}>
+        <Col sm={5} className="text-center">
           <img src={avatar} alt="profile avatar" height={250} width={250} />
         </Col>
         <Col sm={7}>
@@ -121,7 +121,7 @@ export default function UserPage() {
           </Form>
         </Col>
       </Row>
-      <Row className="mt-5">
+      <Row className="mt-5 mb-5">
         <OrderComponent />
       </Row>
     </>
