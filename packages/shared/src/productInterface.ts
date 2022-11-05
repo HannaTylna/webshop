@@ -3,7 +3,8 @@ export default interface Product {
   images: object
   title: string
   description: string
-  kategory: string
+  // kategory: string
+  categories: Array<string>
   weight: number
   price: number
   manufacturer: string

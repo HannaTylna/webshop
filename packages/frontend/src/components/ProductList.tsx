@@ -1,6 +1,7 @@
 import { Product } from "@webshop/shared"
 import React from "react"
 import { Button, Card, Col } from "react-bootstrap"
+import { Link } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 
 const ProductRow = (props: { product: Product }) => {
@@ -14,12 +15,14 @@ const ProductRow = (props: { product: Product }) => {
   return (
     <Col>
       <Card className="h-100">
-        <Card.Img
-          variant="top"
-          src={imageURL}
-          height="200px"
-          style={{ objectFit: "cover" }}
-        />
+        <Link to={`/products/${_id}`}>
+          <Card.Img
+            variant="top"
+            src={imageURL}
+            height="200px"
+            style={{ objectFit: "cover" }}
+          />
+        </Link>
         <Card.Body className="d-flex flex-column">
           <Card.Title className="d-flex justify-content-between align-items-baseline mb-4">
             <span className="fs-6">{title}</span>
