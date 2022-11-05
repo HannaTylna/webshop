@@ -23,6 +23,8 @@ type CartContextType = {
   cartItems: OrderItem[]
   cart: Order[]
   buyProducts: (deliveryAddress: string) => void
+  deliveryAddress: string
+  errorMessage: string
 }
 
 const CartContext = createContext({} as CartContextType)
@@ -41,6 +43,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<Order[]>([])
   const [cartItems, setCartItems] = useState<OrderItem[]>([])
   const [isOpen, setIsOpen] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("waiting fatching")
+  const [deliveryAddress, setDeliveryAddress] = useState("")
 
   const openCart = () => setIsOpen(true)
 
@@ -62,6 +66,16 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     } catch (err) {
       setCart([])
       console.log("Something went wrong when fetching the cart...")
+    }
+  }
+
+  const getCurrentUser = async () => {
+    try {
+      const response = await axios.get("/api/user/info")
+      setDeliveryAddress(response.data.deliveryAddress)
+      setErrorMessage("")
+    } catch (error) {
+      setErrorMessage("Please login!")
     }
   }
 
@@ -125,10 +139,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   useEffect(() => {
     fetchCart()
-  }, [])
+    getCurrentUser()
+  }, [errorMessage])
 
   useEffect(() => {
-    cartItems.length > 0 && saveCart(cartItems)
+    !errorMessage && saveCart(cartItems)
+    // eslint-disable-next-line
   }, [cartItems])
 
   return (
@@ -143,6 +159,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         closeCart,
         cart,
         buyProducts,
+        deliveryAddress,
+        errorMessage,
       }}
     >
       {children}
