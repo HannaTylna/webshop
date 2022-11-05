@@ -64,6 +64,13 @@ export const getAllOrders = async (
   return OrderModel.find({ user }).exec()
 }
 
+export const getCart = async (
+  user: string | undefined,
+  status: string
+): Promise<Order[]> => {
+  return OrderModel.find({ user, status }).exec()
+}
+
 export const saveOrder = async (order: Order): Promise<Order> => {
   const newModel = new OrderModel(order)
   return await newModel.save()

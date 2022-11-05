@@ -8,19 +8,18 @@ import SortByCategory from "../components/SortByCategory"
 
 export default function Homepage() {
   const [products, setProducts] = useState<Product[]>([])
-  axios.defaults.baseURL =
-    process.env.REACT_APP_WEBSHOP_API || "http://localhost:4000"
 
   const getProducts = async (): Promise<Product[]> => {
     const response = await axios.get<Product[]>("/api/products")
     setProducts(response.data)
+    localStorage.setItem("products", JSON.stringify(response.data))
     return products
   }
   useEffect(() => {
     getProducts()
     // eslint-disable-next-line
   }, [])
-
+  
   return (
     <>
       <Row>

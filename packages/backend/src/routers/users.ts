@@ -1,5 +1,10 @@
 import express, { Router } from "express"
-import { getUserInfo, loginUser, updateUserInfo } from "../controllers/auth"
+import {
+  getUserInfo,
+  loginUser,
+  updateUserInfo,
+  refreshToken,
+} from "../controllers/auth"
 import { signUpUser } from "../controllers/user"
 import { authenticateJwtTokenMiddleware } from "../middleware/auth"
 
@@ -9,6 +14,8 @@ const usersRouter: Router = express.Router()
 usersRouter.post("/signUp", signUpUser)
 // Login User
 usersRouter.post("/loginUser", loginUser)
+usersRouter.post("/refreshToken", refreshToken)
+
 usersRouter.use("/info", authenticateJwtTokenMiddleware)
 // Get info
 usersRouter.get("/info", getUserInfo)

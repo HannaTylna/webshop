@@ -1,65 +1,27 @@
 ### Sign Up User
 
-POST http://localhost:4000/user/signUp
+POST http://localhost:6000/api/user/signUp
 content-type: application/json
 
 {
-    "name": "Kanin",
+    "username": "Kristi3",
     "password": "Superhemligt",
-    "mail": "kanin@gmail.com",
+    "email": "kristi3@gmail.com",
     "deliveryAddress": "Okergatan 3",
     "bad": "cat"
 }
 
-### Sign Up User - after hash password
+### Login User
 
-POST http://localhost:4000/user/signUp
+POST http://localhost:6000/api/user/loginUser
 content-type: application/json
 
 {
-    "name": "Kristi",
-    "password": "Superhemligt",
-    "mail": "kristi@gmail.com",
-    "deliveryAddress": "Okergatan 3",
-    "bad": "cat"
-}
-
-### Login User - Bad - Missing Mail
-
-POST http://localhost:4000/auth/loginUser
-content-type: application/json
-
-{
-    "name": "Kanin",
+    "username": "Kristi3",
     "password": "Superhemligt"
 }
 
-### Login User - OK
-
-POST http://localhost:4000/auth/loginUser
+### 
+GET http://localhost:6000/api/user/info
 content-type: application/json
-
-{
-    "mail": "kanin@gmail.com",
-    "password": "Superhemligt"
-}
-
-### Login User 3 - Bad - Incorrect password
-
-POST http://localhost:4000/auth/loginUser
-content-type: application/json
-
-{
-    "mail": "kanin@gmail.com",
-    "password": "BadSuperhemligt"
-}
-
-### Login User - Not Kanin mail
-
-POST http://localhost:4000/auth/loginUser
-content-type: application/json
-
-{
-    "mail": "notkanin@gmail.com",
-    "password": "Superhemligt"
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IktyaXN0aTMiLCJpYXQiOjE2NjYyNjg0NDQsImV4cCI6MTY2NjM1NDg0NH0.C9ZpOeM5MP0j7eAQkpXk3kRx29BPiYxZAK_sisnQqLI

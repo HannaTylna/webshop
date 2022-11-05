@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile.backend
+    ports:
+      - "4000:4000"
+    environment:
+      - MONGODB_URL=${MONGODB_URL}
+
+  frontend:
+    build:
+      dockerfile: Dockerfile.frontend
+      args:
+        APP_WEBSHOP_API: ${APP_WEBSHOP_API}
+    ports:
+      - "3000:3000"
+
+  db_webshop:
+    image: mongo:${MONGO_VERSION}
+    ports:
+      - "27017:27017"
+    container_name: ${MONGO_DB_CONTAINER_NAME}
+    volumes:
+      - /data/${MONGO_DB_CONTAINER_NAME}

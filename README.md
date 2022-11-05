@@ -8,15 +8,8 @@
 npm run start -w backend
 ```
 
-### Install npm package to backend
+### Start frontend server
 
 ```
-npm install --save @types/jsonwebtoken -w backend
+
 ```
-
-## Group members:
-
-    - h
-    - Viktoria Toldi
-    - m
-    - y

@@ -1,10 +1,21 @@
-import React from "react"
+import React,{ useState, useEffect } from "react"
 import { Navbar as NavbarBs, Nav, Container, Button } from "react-bootstrap"
 import { NavLink } from "react-router-dom"
 import cakelogo from "../images/cakelogo.jpg"
 import avatar from "../images/avatar.jpg"
+import { useCart } from "../context/CartContext"
+import LogOut from "./Logout"
 
 export default function Navbar() {
+  const { openCart, cartQuantity } = useCart()
+  const [isLoggedin, setIsLoggedin] = useState<boolean>(false)
+
+  useEffect(()=>{
+    if(localStorage.getItem('webshop')){
+      setIsLoggedin(true)
+    }
+    // eslint-disable-next-line
+  },[])
   return (
     <NavbarBs sticky="top" className="bg-white shadow-sm mb-3 p-4">
       <Container>
@@ -15,6 +26,19 @@ export default function Navbar() {
           <Nav.Link as={NavLink} to="/signup">
             signup
           </Nav.Link>
+          {
+            isLoggedin?
+            <LogOut/>
+            :
+            <>
+            <Nav.Link as={NavLink} to="/signin">
+              login
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/signup">
+              signup
+            </Nav.Link>
+            </>
+          }
         </Nav>
         <NavbarBs.Brand
           href="/"
@@ -29,6 +53,7 @@ export default function Navbar() {
         </NavbarBs.Brand>
         <Nav className="d-flex justify-content-center align-items-center">
           <Button
+            onClick={openCart}
             style={{
               width: "3rem",
               height: "3rem",
@@ -57,7 +82,7 @@ export default function Navbar() {
                 transform: "translate(25%,25%)",
               }}
             >
-              0
+              {cartQuantity}
             </div>
           </Button>
           <Nav.Link as={NavLink} to="/profile">
