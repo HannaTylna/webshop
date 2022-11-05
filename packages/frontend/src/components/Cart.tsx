@@ -8,9 +8,9 @@ type CartProps = {
 }
 
 const Cart = ({ isOpen }: CartProps) => {
-  const { closeCart, cartItems, cart, buyProducts } = useCart()
+  const { closeCart, cartItems, cart, buyProducts, deliveryAddress } = useCart()
   const savedCart = cart[0] || {}
-  const [address, setAddress] = useState<string>("")
+  const [address, setAddress] = useState<string>(deliveryAddress)
   return (
     <Offcanvas show={isOpen} onHide={closeCart} placement="end">
       <Offcanvas.Header closeButton>
@@ -34,13 +34,13 @@ const Cart = ({ isOpen }: CartProps) => {
               type="text"
               className="form-control"
               placeholder="Enter your delivery address ..."
+              defaultValue={deliveryAddress}
               onChange={(e) => setAddress(e.target.value)}
             ></input>
             <Button
               className="w-100"
               onClick={() => {
                 buyProducts(address)
-                setAddress("")
               }}
             >
               Buy
