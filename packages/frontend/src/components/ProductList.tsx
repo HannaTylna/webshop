@@ -1,5 +1,5 @@
 import { Product } from "@webshop/shared"
-import React from "react"
+import React, { useEffect } from "react"
 import { Button, Card, Col } from "react-bootstrap"
 import { useCart } from "../context/CartContext"
 
@@ -8,10 +8,23 @@ const ProductRow = (props: { product: Product }) => {
   const id = _id || ""
   const values = Object.values(images)
   const imageURL = values[1].large
-  const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } =
-    useCart()
+  const {
+    getItemQuantity,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+    getCurrentUser,
+    fetchCart,
+    errorMessage,
+  } = useCart()
+
   const quantity = getItemQuantity(id)
-  const token = localStorage.getItem("webshop")
+
+  useEffect(() => {
+    getCurrentUser()
+    fetchCart()
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <Col>
       <Card className="h-100">
@@ -26,7 +39,7 @@ const ProductRow = (props: { product: Product }) => {
             <span className="fs-6">{title}</span>
             <span className="ms-2 text-muted">{price} kr</span>
           </Card.Title>
-          {token && (
+          {!errorMessage && (
             <div className="mt-auto">
               {quantity === 0 ? (
                 <Button
