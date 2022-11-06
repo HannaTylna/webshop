@@ -8,8 +8,6 @@ const CartItem = ({ productId, quantity, price }: OrderItem) => {
   const parsedProducts = JSON.parse(products || "")
   const item = parsedProducts.find((item: any) => item._id === productId)
 
-  console.log("item", item)
-
   return (
     <Stack direction="horizontal" gap={2} className="d-flex align-items-center">
       <img
