@@ -25,6 +25,8 @@ type CartContextType = {
   buyProducts: (deliveryAddress: string) => void
   deliveryAddress: string
   errorMessage: string
+  getCurrentUser: () => void
+  fetchCart: () => void
 }
 
 const CartContext = createContext({} as CartContextType)
@@ -33,18 +35,18 @@ export const useCart = () => {
   return useContext(CartContext)
 }
 
-const token = localStorage.getItem("webshop")
-
-export const headers = {
-  headers: { Authorization: `Bearer ${token}` },
-}
-
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<Order[]>([])
   const [cartItems, setCartItems] = useState<OrderItem[]>([])
   const [isOpen, setIsOpen] = useState(false)
   const [errorMessage, setErrorMessage] = useState("waiting fatching")
   const [deliveryAddress, setDeliveryAddress] = useState("")
+
+  const token = localStorage.getItem("webshop")
+
+  const headers = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
 
   const openCart = () => setIsOpen(true)
 
@@ -56,8 +58,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   )
 
   const fetchCart = async (): Promise<void> => {
-    console.log("headers", headers)
-
     try {
       const response = await axios.get<Order[]>("api/orders/cart", headers)
       const cart = response.data
@@ -140,7 +140,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   useEffect(() => {
     fetchCart()
     getCurrentUser()
-  }, [errorMessage])
+    // eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     !errorMessage && saveCart(cartItems)
@@ -161,6 +162,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         buyProducts,
         deliveryAddress,
         errorMessage,
+        getCurrentUser,
+        fetchCart,
       }}
     >
       {children}
