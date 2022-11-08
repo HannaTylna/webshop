@@ -2,7 +2,6 @@ import { Response, Request } from "express"
 import { getAllOrders, getCart, saveOrder, OrderModel } from "../models/order"
 import { Order, OrderItem } from "@webshop/shared"
 import { JwtRequest } from "../middleware/auth"
-import { resolve } from "path"
 
 export const loadAll = async (
   req: JwtRequest<string>,
