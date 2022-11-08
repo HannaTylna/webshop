@@ -6,5 +6,6 @@ export default interface User {
   lastName?: string
   email?: string
   phoneNumber?: number
-  deliveryAddress?: string
+  deliveryAddress?: string,
+  role: 'admin' | 'user' | undefined;
 }

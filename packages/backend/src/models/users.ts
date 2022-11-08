@@ -11,6 +11,7 @@ const userSchema = new Schema({
   email: { type: String, required: true, lowercase: true },
   phoneNumber: { type: Number },
   deliveryAddress: { type: String },
+  role: {type: String, enum:['admin', 'user'],  default: 'user'}
 })
 
 export const UserModel = model<User>("User", userSchema)
