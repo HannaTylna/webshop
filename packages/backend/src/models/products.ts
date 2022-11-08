@@ -39,3 +39,19 @@ export const createItem = async(item: Product): Promise<Product> =>{
   newItem.save()
   return newItem
 }
+
+export const updateItem = async(id: string, input: Product): Promise<void> => {
+  const updatedItem = await ProductModel.findOneAndUpdate(
+    { _id: id },
+    {
+      images: input.images,
+      title: input.title,
+      description: input.description,
+      categories: input.categories,
+      weight: input.weight,
+      price: input.price,
+      manufacturer: input.manufacturer
+    }, 
+    { returnDocument: "after" }
+  )
+}
