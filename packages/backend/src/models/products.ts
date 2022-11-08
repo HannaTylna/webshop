@@ -33,3 +33,9 @@ export const searchProductItems = async (
 ): Promise<Product[] | null> => {
   return ProductModel.find({ title: { $regex: searchParam } }).exec()
 }
+
+export const createItem = async(item: Product): Promise<Product> =>{
+  const newItem = new ProductModel(item)
+  newItem.save()
+  return newItem
+}
