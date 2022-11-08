@@ -2,6 +2,7 @@ import { Response, Request } from "express"
 import { getAllOrders, getCart, saveOrder, OrderModel } from "../models/order"
 import { Order, OrderItem } from "@webshop/shared"
 import { JwtRequest } from "../middleware/auth"
+import { resolve } from "path"
 
 export const loadAll = async (
   req: JwtRequest<string>,
@@ -84,11 +85,29 @@ export const saveCart = async (req: JwtRequest<string>, res: Response) => {
   }
 }
 
-export const registeredOrders = async(req: JwtRequest<string>, res: Response)=>{
+export const registeredOrders = async (
+  req: JwtRequest<string>,
+  res: Response
+) => {
   try {
     const allRegisteredOrders = await OrderModel.find({}).exec()
     res.status(200).json(allRegisteredOrders)
   } catch (error) {
-    res.status(400).json(error) 
+    res.status(400).json(error)
+  }
+}
+
+export const updateOrderStatus = async (req: Request, res: Response) => {
+  try {
+    const orderId = req.params.id
+    const { status } = req.body
+    const updateStatus = await OrderModel.findOneAndUpdate(
+      { _id: orderId },
+      { status: status },
+      { returnDocument: "after" }
+    )
+    res.status(200).json(updateStatus)
+  } catch (error) {
+    res.status(400).json(error)
   }
 }
