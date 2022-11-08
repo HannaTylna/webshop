@@ -83,3 +83,12 @@ export const saveCart = async (req: JwtRequest<string>, res: Response) => {
     res.status(400).json({ message: "failed to submit order", error: error })
   }
 }
+
+export const registeredOrders = async(req: JwtRequest<string>, res: Response)=>{
+  try {
+    const allRegisteredOrders = await OrderModel.find({})
+    res.status(200).json(allRegisteredOrders)
+  } catch (error) {
+    res.status(400).json(error) 
+  }
+}
