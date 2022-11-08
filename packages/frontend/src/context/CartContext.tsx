@@ -23,6 +23,10 @@ type CartContextType = {
   cartItems: OrderItem[]
   cart: Order[]
   buyProducts: (deliveryAddress: string) => void
+  deliveryAddress: string
+  errorMessage: string
+  getCurrentUser: () => void
+  fetchCart: () => void
 }
 
 const CartContext = createContext({} as CartContextType)
@@ -31,18 +35,18 @@ export const useCart = () => {
   return useContext(CartContext)
 }
 
-const token =
-  //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik5hdCIsInVzZXJpZCI6IjYzNTgzM2FjNjIwZTNhM2JhM2EwN2JiMyIsImlhdCI6MTY2NzIwOTAyMywiZXhwIjoxNjY3Mjk1NDIzfQ.h2Sw3CVXXEIuFNyt0JN-lDtw2tP_r11OHjv6X32fm50"
-  localStorage.getItem("webshop")
-
-export const headers = {
-  headers: { Authorization: `Bearer ${token}` },
-}
-
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<Order[]>([])
   const [cartItems, setCartItems] = useState<OrderItem[]>([])
   const [isOpen, setIsOpen] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("waiting fatching")
+  const [deliveryAddress, setDeliveryAddress] = useState("")
+
+  const token = localStorage.getItem("webshop")
+
+  const headers = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
 
   const openCart = () => setIsOpen(true)
 
@@ -61,7 +65,17 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       setCartItems(cart[0]?.products || [])
     } catch (err) {
       setCart([])
-      console.log("Something went wrong when saving cart...")
+      console.log("Something went wrong when fetching the cart...")
+    }
+  }
+
+  const getCurrentUser = async () => {
+    try {
+      const response = await axios.get("/api/user/info")
+      setDeliveryAddress(response.data.deliveryAddress)
+      setErrorMessage("")
+    } catch (error) {
+      setErrorMessage("Please login!")
     }
   }
 
@@ -125,10 +139,13 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   useEffect(() => {
     fetchCart()
+    getCurrentUser()
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
-    cartItems.length > 0 && saveCart(cartItems)
+    !errorMessage && saveCart(cartItems)
+    // eslint-disable-next-line
   }, [cartItems])
 
   return (
@@ -143,6 +160,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         closeCart,
         cart,
         buyProducts,
+        deliveryAddress,
+        errorMessage,
+        getCurrentUser,
+        fetchCart,
       }}
     >
       {children}

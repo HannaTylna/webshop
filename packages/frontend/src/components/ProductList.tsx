@@ -1,5 +1,5 @@
 import { Product } from "@webshop/shared"
-import React from "react"
+import React, { useEffect } from "react"
 import { Button, Card, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { useCart } from "../context/CartContext"
@@ -9,9 +9,23 @@ const ProductRow = (props: { product: Product }) => {
   const id = _id || ""
   const values = Object.values(images)
   const imageURL = values[1].large
-  const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } =
-    useCart()
+  const {
+    getItemQuantity,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+    getCurrentUser,
+    fetchCart,
+    errorMessage,
+  } = useCart()
+
   const quantity = getItemQuantity(id)
+
+  useEffect(() => {
+    getCurrentUser()
+    fetchCart()
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <Col>
       <Card className="h-100">
@@ -28,27 +42,29 @@ const ProductRow = (props: { product: Product }) => {
             <span className="fs-6">{title}</span>
             <span className="ms-2 text-muted">{price} kr</span>
           </Card.Title>
-          <div className="mt-auto">
-            {quantity === 0 ? (
-              <Button
-                className="w-100"
-                onClick={() => increaseCartQuantity(id, price)}
-              >
-                {" "}
-                + Add to cart
-              </Button>
-            ) : (
-              <div className="d-flex align-items-center justify-content-center style={{gap:'.5rem'}}">
-                <Button onClick={() => decreaseCartQuantity(id)}>-</Button>
-                <div>
-                  <span className="fs-5 m-1">{quantity} in cart</span>
-                </div>
-                <Button onClick={() => increaseCartQuantity(id, price)}>
-                  +
+          {!errorMessage && (
+            <div className="mt-auto">
+              {quantity === 0 ? (
+                <Button
+                  className="w-100"
+                  onClick={() => increaseCartQuantity(id, price)}
+                >
+                  {" "}
+                  + Add to cart
                 </Button>
-              </div>
-            )}
-          </div>
+              ) : (
+                <div className="d-flex align-items-center justify-content-center style={{gap:'.5rem'}}">
+                  <Button onClick={() => decreaseCartQuantity(id)}>-</Button>
+                  <div>
+                    <span className="fs-5 m-1">{quantity} in cart</span>
+                  </div>
+                  <Button onClick={() => increaseCartQuantity(id, price)}>
+                    +
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
         </Card.Body>
       </Card>
     </Col>
