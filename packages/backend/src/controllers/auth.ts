@@ -45,6 +45,7 @@ export const loginUser = async (
     deliveryAddress: user.deliveryAddress,
     username: user.username,
     userid: user._id,
+    role: user.role
   }
 
   // Create JWT Token
