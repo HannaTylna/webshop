@@ -1,26 +1,38 @@
-import React from "react"
+import React,{ useState, useEffect } from "react"
 import { Navbar as NavbarBs, Nav, Container, Button } from "react-bootstrap"
 import { NavLink } from "react-router-dom"
 import cakelogo from "../images/cakelogo.jpg"
 import avatar from "../images/avatar.jpg"
 import { useCart } from "../context/CartContext"
+import LogOut from "./Logout"
 
 export default function Navbar() {
   const { openCart, cartQuantity, errorMessage } = useCart()
+  const [isLoggedin, setIsLoggedin] = useState<boolean>(false)
 
+  useEffect(()=>{
+    if(localStorage.getItem('webshop')){
+      setIsLoggedin(true)
+    }
+    // eslint-disable-next-line
+  },[])
   return (
-    <NavbarBs
-      className="bg-white shadow-sm mb-3 sticky-top p-4"
-      style={{ position: "relative" }}
-    >
+    <NavbarBs sticky="top" className="bg-white shadow-sm mb-3 p-4">
       <Container>
         <Nav className="d-flex justify-content-center align-items-center">
-          <Nav.Link as={NavLink} to="/signin">
-            login
-          </Nav.Link>
-          <Nav.Link as={NavLink} to="/signup">
-            signup
-          </Nav.Link>
+          {
+            isLoggedin?
+            <LogOut/>
+            :
+            <>
+            <Nav.Link as={NavLink} to="/signin">
+              login
+            </Nav.Link>
+            <Nav.Link as={NavLink} to="/signup">
+              signup
+            </Nav.Link>
+            </>
+          }
         </Nav>
         <NavbarBs.Brand
           href="/"

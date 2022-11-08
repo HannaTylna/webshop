@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap"
 import { Routes, Route } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import Homepage from "./pages/Homepage"
+import ProductPage from "./pages/ProductPage"
 import { CartProvider } from "./context/CartContext"
 import UserPage from "./pages/UserPage"
 import SigninPage from "./pages/SigninPage"
@@ -30,6 +31,7 @@ function App() {
       <Container>
         <Routes>
           <Route path="/" element={<Homepage />} />
+          <Route path="/products/:id" element={<ProductPage />} />
           <Route path="/profile" element={<UserPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
