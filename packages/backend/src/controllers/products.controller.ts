@@ -2,7 +2,7 @@ import { Product } from "@webshop/shared"
 import express, { Router, Response, Request } from "express"
 import { getAllProducts, getProduct, getProductsbyCategory } from "../models/products"
 import { productSearch } from "../services/product.service"
-import { createItem } from "../models/products"
+import { createItem, updateItem } from "../models/products"
 
 export const loadAllProducts = async (req: Request, res: Response) => {
   try {
@@ -42,6 +42,14 @@ export const loadProductsbyCategory = async (req: Request, res: Response) => {
 export const addProduct = async (req: Request, res: Response) => {
   try {
     res.status(200).json(await createItem(req.body))
+  } catch (error) {
+    res.status(200).json(error)
+  }
+}
+
+export const updateProduct = async (req: Request, res: Response) => {
+  try {
+    res.status(200).json(await updateItem(req.params.id, req.body))
   } catch (error) {
     res.status(200).json(error)
   }
