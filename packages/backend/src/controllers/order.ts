@@ -86,7 +86,7 @@ export const saveCart = async (req: JwtRequest<string>, res: Response) => {
 
 export const registeredOrders = async(req: JwtRequest<string>, res: Response)=>{
   try {
-    const allRegisteredOrders = await OrderModel.find({})
+    const allRegisteredOrders = await OrderModel.find({}).exec()
     res.status(200).json(allRegisteredOrders)
   } catch (error) {
     res.status(400).json(error) 
