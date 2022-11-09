@@ -1,13 +1,12 @@
-import {Nav} from "react-bootstrap"
+import { Nav } from "react-bootstrap"
+import { useNavigate } from "react-router-dom"
 
 export default function LogOut() {
-    const handOnClick = async():Promise<void> => {
-        await localStorage.removeItem('webshop')
-        window.location.reload()
-    }
-  return (
-    <Nav.Link onClick={handOnClick}>
-    Logout
-    </Nav.Link>
-  )
+  const navigate = useNavigate()
+  const handOnClick = async (): Promise<void> => {
+    localStorage.removeItem("webshop")
+    navigate("/")
+    window.location.reload()
+  }
+  return <Nav.Link onClick={handOnClick}>Logout</Nav.Link>
 }
