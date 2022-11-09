@@ -30,14 +30,13 @@ export default function UserPage() {
   const handleOnUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
-      const response = await axios.patch("/api/user/info", {
+      await axios.patch("/api/user/info", {
         firstName: userFirstName,
         lastName: userLastName,
         email: userEmail,
         deliveryAddress: userDeliveryAddress,
         phoneNumber: userPhoneNumber,
       })
-      console.log(response)
     } catch (error) {
       console.log("Something went wrong!")
     }
@@ -62,50 +61,40 @@ export default function UserPage() {
               <Form.Label>First name:</Form.Label>
               <Form.Control
                 type="text"
-                value={userFirstName}
-                onChange={(e: {
-                  target: { value: React.SetStateAction<string> }
-                }) => setUserFirstName(e.target.value)}
+                value={userFirstName ? userFirstName : ""}
+                onChange={(e) => setUserFirstName(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicLastName">
               <Form.Label>Last name:</Form.Label>
               <Form.Control
                 type="text"
-                value={userLastName}
-                onChange={(e: {
-                  target: { value: React.SetStateAction<string> }
-                }) => setUserLastName(e.target.value)}
+                value={userLastName ? userLastName : ""}
+                onChange={(e) => setUserLastName(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email:</Form.Label>
               <Form.Control
                 type="email"
-                value={userEmail}
-                onChange={(e: {
-                  target: { value: React.SetStateAction<string> }
-                }) => setUserEmail(e.target.value)}
+                value={userEmail ? userEmail : ""}
+                onChange={(e) => setUserEmail(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPhone">
               <Form.Label>Phone number:</Form.Label>
               <Form.Control
                 type="text"
-                value={userPhoneNumber}
-                onChange={(e: {
-                  target: { value: React.SetStateAction<string> }
-                }) => setUserPhoneNumber(e.target.value)}
+                value={userPhoneNumber ? userPhoneNumber : ""}
+                onChange={(e) => setUserPhoneNumber(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicAddress">
               <Form.Label>Delivery address:</Form.Label>
               <Form.Control
                 type="text"
-                value={userDeliveryAddress}
-                onChange={(e: {
-                  target: { value: React.SetStateAction<string> }
-                }) => setUserDeliveryAddress(e.target.value)}
+                value={userDeliveryAddress ? userDeliveryAddress : ""}
+                onChange={(e) => setUserDeliveryAddress(e.target.value)}
               />
             </Form.Group>
             <Button variant="primary" type="submit">
