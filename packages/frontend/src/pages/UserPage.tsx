@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import axios from "axios"
 import OrderComponent from "../components/OrderComponent"
+import OrdersPage from "./OrdersPage"
 
 export default function UserPage() {
   const [userFirstName, setUserFirstName] = useState<string>("")
@@ -13,6 +14,7 @@ export default function UserPage() {
   const [userEmail, setUserEmail] = useState<string>("")
   const [userPhoneNumber, setUserPhoneNumber] = useState<string>("")
   const [userDeliveryAddress, setUserDeliveryAddress] = useState<string>("")
+  const [isAdmin, setIsAdmin] = useState<string>("")
 
   const getCurrentUser = async () => {
     try {
@@ -22,6 +24,7 @@ export default function UserPage() {
       setUserEmail(response.data.email)
       setUserPhoneNumber(response.data.phoneNumber)
       setUserDeliveryAddress(response.data.deliveryAddress)
+      setIsAdmin(response.data.role)
     } catch (error) {
       console.log(error)
     }
@@ -106,6 +109,7 @@ export default function UserPage() {
       <Row className="mt-5 mb-5">
         <OrderComponent />
       </Row>
+      {isAdmin === "admin" ? <OrdersPage /> : ""}
     </>
   )
 }
