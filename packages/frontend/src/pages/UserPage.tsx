@@ -13,7 +13,6 @@ export default function UserPage() {
   const [userEmail, setUserEmail] = useState<string>("")
   const [userPhoneNumber, setUserPhoneNumber] = useState<string>("")
   const [userDeliveryAddress, setUserDeliveryAddress] = useState<string>("")
-  const [errorMessage, setErrorMessage] = useState("")
 
   const getCurrentUser = async () => {
     try {
@@ -24,7 +23,7 @@ export default function UserPage() {
       setUserPhoneNumber(response.data.phoneNumber)
       setUserDeliveryAddress(response.data.deliveryAddress)
     } catch (error) {
-      setErrorMessage("Please login!")
+      console.log(error)
     }
   }
 
@@ -58,12 +57,6 @@ export default function UserPage() {
           <img src={avatar} alt="profile avatar" height={250} width={250} />
         </Col>
         <Col sm={7}>
-          {errorMessage && (
-            <p className="alert alert-warning" role="alert">
-              {" "}
-              {errorMessage}{" "}
-            </p>
-          )}
           <Form className="mt-5" onSubmit={handleOnUpdate}>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>First name:</Form.Label>
