@@ -14,17 +14,6 @@ const port: number = parseInt(process.env.SERVER_PORT || "4000")
 const mongoUrl: string =
   process.env.MONGODB_URL || "mongodb://localhost:27017/webshop"
 
-const storage = multer.diskStorage({
-  destination: "uploads",
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  },
-})
-
-const upload = multer({ storage: storage })
-app.use(upload.array("files"))
-app.use("/api/uploads", express.static("./uploads"))
-
 app.use("/api", router)
 
 app.listen(port, async function () {
