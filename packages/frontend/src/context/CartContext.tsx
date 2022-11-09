@@ -42,6 +42,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [errorMessage, setErrorMessage] = useState("waiting fatching")
   const [deliveryAddress, setDeliveryAddress] = useState("")
 
+  const token = localStorage.getItem("webshop")
+
+  const headers = {
+    headers: { Authorization: `Bearer ${token}` },
+  }
+
   const openCart = () => setIsOpen(true)
 
   const closeCart = () => setIsOpen(false)
@@ -53,12 +59,13 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const fetchCart = async (): Promise<void> => {
     try {
-      const response = await axios.get<Order[]>("api/orders/cart")
+      const response = await axios.get<Order[]>("api/orders/cart", headers)
       const cart = response.data
       setCart(cart)
       setCartItems(cart[0]?.products || [])
     } catch (err) {
       setCart([])
+      console.log("Something went wrong when fetching the cart...")
     }
   }
 
@@ -74,11 +81,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const saveCart = async (cartItems: OrderItem[]): Promise<void> => {
     try {
-      await axios.post("api/orders/cart", cartItems)
-      const response = await axios.get<Order[]>("api/orders/cart")
+      await axios.post("api/orders/cart", cartItems, headers)
+      const response = await axios.get<Order[]>("api/orders/cart", headers)
       setCart(response.data)
     } catch (err) {
-      console.error(err)
+      console.log(err)
     }
   }
 
@@ -123,7 +130,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       deliveryAddress: deliveryAddress,
     }
     try {
-      await axios.post("api/orders/", payload)
+      await axios.post("api/orders/", payload, headers)
       fetchCart()
     } catch (err) {
       console.log(err)
