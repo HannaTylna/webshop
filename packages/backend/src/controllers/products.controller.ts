@@ -41,6 +41,7 @@ export const loadProductsbyCategory = async (req: Request, res: Response) => {
 
 export const addProduct = async (req: Request, res: Response) => {
   try {
+    req.body.images = req.file  
     res.status(200).json(await createItem(req.body))
   } catch (error) {
     res.status(200).json(error)
