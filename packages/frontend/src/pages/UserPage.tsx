@@ -6,7 +6,8 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import axios from "axios"
 import OrderComponent from "../components/OrderComponent"
-import OrdersPage from "./OrdersPage"
+import { Link } from "react-router-dom"
+import OrdersComponent from "../components/OrdersComponent"
 
 export default function UserPage() {
   const [userFirstName, setUserFirstName] = useState<string>("")
@@ -109,7 +110,7 @@ export default function UserPage() {
       <Row className="mt-5 mb-5">
         <OrderComponent />
       </Row>
-      {isAdmin === "admin" ? <OrdersPage /> : ""}
+      {isAdmin === "admin" ? <OrdersComponent /> : ""}
     </>
   )
 }
