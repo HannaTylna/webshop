@@ -45,9 +45,9 @@ export default function SortByCategory(props: { products: Product[] }) {
           }}
         >
           <option>select by category</option>
-          {Object.keys(groupByCategories).map((category) => {
+          {Object.keys(groupByCategories).map((category, index) => {
             return (
-              <option key={category.length} value={category}>
+              <option key={index} value={category}>
                 {category}
               </option>
             )
