@@ -55,10 +55,16 @@ function App() {
           {role === "admin" ? (
             <>
               <Route path="/orders" element={<OrdersPage />} />
-              <Route path="/add/products" element={<AddProductsPage />} />
             </>
           ) : (
             <Route path="/orders" element={<NotFound />} />
+          )}
+          {role === "admin" ? (
+            <>
+              <Route path="/add/products" element={<AddProductsPage />} />
+            </>
+          ) : (
+            <Route path="/add/products" element={<NotFound />} />
           )}
         </Routes>
       </Container>
