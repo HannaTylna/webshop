@@ -137,8 +137,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   }
 
   useEffect(() => {
-    fetchCart()
-    getCurrentUser()
+    if (token) {
+      fetchCart()
+      getCurrentUser()
+    }
     // eslint-disable-next-line
   }, [])
 

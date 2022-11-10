@@ -21,8 +21,10 @@ const ProductRow = (props: { product: Product }) => {
   const quantity = getItemQuantity(id)
 
   useEffect(() => {
-    getCurrentUser()
-    fetchCart()
+    if (!errorMessage) {
+      getCurrentUser()
+      fetchCart()
+    }
     // eslint-disable-next-line
   }, [])
 
