@@ -2,6 +2,10 @@ import { Product } from "@webshop/shared"
 import express, { Router, Response, Request } from "express"
 import { getAllProducts, getProduct, getProductsbyCategory } from "../models/products"
 import { productSearch } from "../services/product.service"
+import { createItem, updateItem } from "../models/products"
+import * as fs from 'fs';
+import * as path from 'path';
+import { Buffer } from "buffer"
 
 export const loadAllProducts = async (req: Request, res: Response) => {
   try {
@@ -35,5 +39,28 @@ export const loadProductsbyCategory = async (req: Request, res: Response) => {
     res.status(200).json(await getProductsbyCategory(productCategory))
   } catch (error){
     res.status(400).send(error)
+  }
+}
+
+export const addProduct = async (req: Request, res: Response) => {
+  try {
+    const obj = {
+      img: {
+          data: fs.readFileSync(path.join(`${__dirname}../../../uploads/${req.file?.filename}`)),
+          contentType: "image/png"
+      }
+    }
+    req.body.images = obj.img
+    res.status(200).json(await createItem(req.body))
+  } catch (error) {
+    res.status(200).json(error)
+  }
+}
+
+export const updateProduct = async (req: Request, res: Response) => {
+  try {
+    res.status(200).json(await updateItem(req.params.id, req.body))
+  } catch (error) {
+    res.status(200).json(error)
   }
 }
