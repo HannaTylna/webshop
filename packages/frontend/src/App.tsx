@@ -1,5 +1,5 @@
 import axios from "axios"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Container } from "react-bootstrap"
 import { Routes, Route } from "react-router-dom"
 import Navbar from "./components/Navbar"
@@ -9,6 +9,8 @@ import { CartProvider } from "./context/CartContext"
 import UserPage from "./pages/UserPage"
 import SigninPage from "./pages/SigninPage"
 import SignupPage from "./pages/SignupPage"
+import AddProductsPage from "./pages/AddProductsPage"
+import OrdersPage from "./pages/OrdersPage"
 
 axios.defaults.baseURL =
   process.env.REACT_APP_WEBSHOP_API || "http://localhost:4000"
@@ -25,6 +27,20 @@ axios.interceptors.request.use((config) => {
 })
 
 function App() {
+  const [role, setRole] = useState<string>("")
+  const getCurrentUser = async () => {
+    try {
+      const response = await axios.get("/api/user/info")
+      setRole(response.data.role)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getCurrentUser()
+  }, [])
+
   return (
     <CartProvider>
       <Navbar />
@@ -35,6 +51,14 @@ function App() {
           <Route path="/profile" element={<UserPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          {role === "admin" ? (
+            <>
+              <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/add/products" element={<AddProductsPage />} />
+            </>
+          ) : (
+            ""
+          )}
         </Routes>
       </Container>
     </CartProvider>
