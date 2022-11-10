@@ -33,7 +33,11 @@ const orderSchema = new Schema(
     products: [ItemSchema],
     shippingCost: { type: Number, default: 50 },
     deliveryAddress: { type: String },
-    status: { type: String, required: true },
+    status: {
+      type: String,
+      enum: ["registered", "processing", "in delivery", "delivered"],
+      default: "registered",
+    },
   },
   {
     timestamps: true,
