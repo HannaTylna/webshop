@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import axios from "axios"
 import OrderComponent from "../components/OrderComponent"
+import AdminComponent from "../components/AdminComponent"
 
 export default function UserPage() {
   const [userFirstName, setUserFirstName] = useState<string>("")
@@ -53,6 +54,7 @@ export default function UserPage() {
 
   return (
     <>
+      {isAdmin !== "admin" ? "" : <AdminComponent />}
       <h1 className="text-center">User profile</h1>
       <Row>
         <Col sm={5} className="text-center">
@@ -109,15 +111,6 @@ export default function UserPage() {
       <Row className="mt-5 mb-5">
         <OrderComponent />
       </Row>
-      {isAdmin !== "admin" ? (
-        ""
-      ) : (
-        <>
-          <Button className="mb-5" variant="primary" size="lg" href="/orders">
-            See all orders
-          </Button>
-        </>
-      )}
     </>
   )
 }
