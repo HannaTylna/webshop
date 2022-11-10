@@ -16,6 +16,6 @@ adminRouter.post("/add", upload.single("images"), addProduct)
 adminRouter.patch("/update/:id", updateProduct)
 adminRouter.use("/update", adminAuth)
 adminRouter.get("/update/:id", getOrder)
-adminRouter.patch("/update/:id", updateOrderStatus)
+adminRouter.post("/update/:id", updateOrderStatus)
 
 export default adminRouter
