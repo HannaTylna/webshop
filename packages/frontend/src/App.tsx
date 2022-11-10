@@ -11,6 +11,7 @@ import SigninPage from "./pages/SigninPage"
 import SignupPage from "./pages/SignupPage"
 import AddProductsPage from "./pages/AddProductsPage"
 import OrdersPage from "./pages/OrdersPage"
+import NotFound from "./pages/NotFound"
 
 axios.defaults.baseURL =
   process.env.REACT_APP_WEBSHOP_API || "http://localhost:4000"
@@ -57,7 +58,7 @@ function App() {
               <Route path="/add/products" element={<AddProductsPage />} />
             </>
           ) : (
-            ""
+            <Route path="/orders" element={<NotFound />} />
           )}
         </Routes>
       </Container>
