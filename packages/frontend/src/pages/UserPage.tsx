@@ -41,7 +41,7 @@ export default function UserPage() {
         phoneNumber: userPhoneNumber,
       })
     } catch (error) {
-      console.log("Something went wrong!")
+      console.log(error)
     }
     window.location.reload()
     alert("Data is successful saved!")
