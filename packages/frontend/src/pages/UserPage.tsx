@@ -6,8 +6,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import axios from "axios"
 import OrderComponent from "../components/OrderComponent"
-import { Link } from "react-router-dom"
-import OrdersComponent from "../components/OrdersComponent"
+import OrdersPage from "./OrdersPage"
 
 export default function UserPage() {
   const [userFirstName, setUserFirstName] = useState<string>("")
@@ -26,6 +25,7 @@ export default function UserPage() {
       setUserPhoneNumber(response.data.phoneNumber)
       setUserDeliveryAddress(response.data.deliveryAddress)
       setIsAdmin(response.data.role)
+      console.log(response)
     } catch (error) {
       console.log(error)
     }
@@ -110,7 +110,15 @@ export default function UserPage() {
       <Row className="mt-5 mb-5">
         <OrderComponent />
       </Row>
-      {isAdmin === "admin" ? <OrdersComponent /> : ""}
+      {isAdmin !== "admin" ? (
+        ""
+      ) : (
+        <>
+          <Button className="mb-5" variant="primary" size="lg" href="/orders">
+            See all orders
+          </Button>
+        </>
+      )}
     </>
   )
 }
