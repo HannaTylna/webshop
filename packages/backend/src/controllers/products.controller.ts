@@ -3,6 +3,9 @@ import express, { Router, Response, Request } from "express"
 import { getAllProducts, getProduct, getProductsbyCategory } from "../models/products"
 import { productSearch } from "../services/product.service"
 import { createItem, updateItem } from "../models/products"
+import * as fs from 'fs';
+import * as path from 'path';
+import { Buffer } from "buffer"
 
 export const loadAllProducts = async (req: Request, res: Response) => {
   try {
@@ -41,7 +44,15 @@ export const loadProductsbyCategory = async (req: Request, res: Response) => {
 
 export const addProduct = async (req: Request, res: Response) => {
   try {
-    req.body.images = req.file  
+    const pathIMG = path.join(`${__dirname}/../../uploads/${req.file?.filename}`)
+    const src = {
+      large: pathIMG,
+      small: pathIMG,
+    }
+    req.body.images = {
+      alt: req.file?.filename,
+      src: src
+    }
     res.status(200).json(await createItem(req.body))
   } catch (error) {
     res.status(200).json(error)
