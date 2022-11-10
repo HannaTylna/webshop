@@ -65,7 +65,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       setCartItems(cart[0]?.products || [])
     } catch (err) {
       setCart([])
-      console.log("Something went wrong when fetching the cart...")
     }
   }
 
