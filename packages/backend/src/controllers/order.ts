@@ -54,41 +54,61 @@ export const submit = async (req: JwtRequest<string>, res: Response) => {
 export const saveCart = async (req: JwtRequest<string>, res: Response) => {
   const items: Array<OrderItem> = req.body
   const userId = req.jwt?.userid || ""
-  try {
-    let savedCart: Order | null
-    const cart = (await OrderModel.findOne({
-      user: userId,
-      status: "cart",
-    }).exec()) as Order
-
-    if (cart) {
-      cart.products = items
-      savedCart = await OrderModel.findOneAndUpdate({ _id: cart._id }, cart, {
-        new: true,
-      })
-    } else {
-      const newCart: Order = {
+  if (items.length > 0) {
+    try {
+      let savedCart: Order | null
+      const cart = (await OrderModel.findOne({
         user: userId,
-        products: items,
-        totalCost: items.reduce(
-          (sum, current) => sum + current.quantity * current.price,
-          0
-        ),
         status: "cart",
+      }).exec()) as Order
+
+      if (cart) {
+        cart.products = items
+        savedCart = await OrderModel.findOneAndUpdate({ _id: cart._id }, cart, {
+          new: true,
+        })
+      } else {
+        const newCart: Order = {
+          user: userId,
+          products: items,
+          totalCost: items.reduce(
+            (sum, current) => sum + current.quantity * current.price,
+            0
+          ),
+          status: "cart",
+        }
+        savedCart = await saveOrder(newCart)
       }
-      savedCart = await saveOrder(newCart)
+      res.status(200).send(savedCart)
+    } catch (error) {
+      res.status(400).json({ message: "failed to submit order", error: error })
     }
-    res.status(200).send(savedCart)
-  } catch (error) {
-    res.status(400).json({ message: "failed to submit order", error: error })
   }
 }
 
-export const registeredOrders = async(req: JwtRequest<string>, res: Response)=>{
+export const registeredOrders = async (
+  req: JwtRequest<string>,
+  res: Response
+) => {
   try {
     const allRegisteredOrders = await OrderModel.find({}).exec()
     res.status(200).json(allRegisteredOrders)
   } catch (error) {
-    res.status(400).json(error) 
+    res.status(400).json(error)
+  }
+}
+
+export const updateOrderStatus = async (req: Request, res: Response) => {
+  try {
+    const orderId = req.params.id
+    const { status } = req.body
+    const updateStatus = await OrderModel.findOneAndUpdate(
+      { _id: orderId },
+      { status: status },
+      { returnDocument: "after" }
+    )
+    res.status(200).json(updateStatus)
+  } catch (error) {
+    res.status(400).json(error)
   }
 }
