@@ -27,9 +27,9 @@ export default function ProductPage() {
       {error && <p>{error}</p>}
       {product && (
         <Row>
-          <Col md={6} xs={10} className="d-flex justify-content-center">
+          <Col style={{height: 300}} className="d-flex justify-content-center">
             <img
-              src={Object.values(product?.images)[1].large}
+              src={`data:image/jpg;base64,${Object.values(product?.images)[0]}`}
               alt={product?.title}
             />
           </Col>

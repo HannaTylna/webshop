@@ -11,7 +11,7 @@ const CartItem = ({ productId, quantity, price }: OrderItem) => {
   return (
     <Stack direction="horizontal" gap={2} className="d-flex align-items-center">
       <img
-        src={item.images.data}
+        src={`data:image/jpg;base64,${item.images.data}`}
         style={{ width: "125px", height: "100px", objectFit: "cover" }}
         alt={item.title}
       />
