@@ -18,12 +18,6 @@ export default function AddProductsPage() {
   }
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log("sended")
-    const formData: any | null = new FormData()
-    formData.append("file", file)
-    console.log(file!.name)
-    // formData.append("fileName", file!.name)
-
     const response = await axios.post("/api/admin/add", {
       title: title,
       description: description,
@@ -31,10 +25,15 @@ export default function AddProductsPage() {
       weight: weight,
       price: price,
       manufacturer: manufacturer,
-      images: formData,
-    })
+      images: file,
+    },
+	{
+		headers: { "Content-Type": "multipart/form-data" },
+	}
+	)
     console.log(response.data)
   }
+console.log(file);
 
   return (
     <>
