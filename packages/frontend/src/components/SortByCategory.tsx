@@ -24,7 +24,6 @@ export default function SortByCategory(props: { products: Product[] }) {
   )
   const selectCategory = async () => {
     if (category) {
-      console.log("category", category)
       const response = await axios.get(`/api/products/categories/${category}`)
       setProductsByCategory(response.data)
     }
@@ -67,7 +66,9 @@ export default function SortByCategory(props: { products: Product[] }) {
                 <Modal.Body>
                   <Link to={`/products/${product._id}`}>
                     <img
-                      src={Object.values(product?.images)[1].small}
+                      src={`data:image/jpg;base64,${
+                        Object.values(product?.images)[0]
+                      }`}
                       style={{
                         width: "200px",
                         height: "200px",

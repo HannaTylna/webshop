@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import axios from "axios"
 import OrderComponent from "../components/OrderComponent"
+import AdminComponent from "../components/AdminComponent"
 
 export default function UserPage() {
   const [userFirstName, setUserFirstName] = useState<string>("")
@@ -13,6 +14,7 @@ export default function UserPage() {
   const [userEmail, setUserEmail] = useState<string>("")
   const [userPhoneNumber, setUserPhoneNumber] = useState<string>("")
   const [userDeliveryAddress, setUserDeliveryAddress] = useState<string>("")
+  const [role, setRole] = useState<string>("")
 
   const getCurrentUser = async () => {
     try {
@@ -22,6 +24,7 @@ export default function UserPage() {
       setUserEmail(response.data.email)
       setUserPhoneNumber(response.data.phoneNumber)
       setUserDeliveryAddress(response.data.deliveryAddress)
+      setRole(response.data.role)
     } catch (error) {
       console.log(error)
     }
@@ -38,7 +41,7 @@ export default function UserPage() {
         phoneNumber: userPhoneNumber,
       })
     } catch (error) {
-      console.log("Something went wrong!")
+      console.log(error)
     }
     window.location.reload()
     alert("Data is successful saved!")
@@ -50,6 +53,7 @@ export default function UserPage() {
 
   return (
     <>
+      {role !== "admin" ? "" : <AdminComponent />}
       <h1 className="text-center">User profile</h1>
       <Row>
         <Col sm={5} className="text-center">

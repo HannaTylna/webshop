@@ -35,7 +35,7 @@ const orderSchema = new Schema(
     deliveryAddress: { type: String },
     status: {
       type: String,
-      enum: ["registered", "processing", "in delivery", "delivered"],
+      enum: ["cart", "registered", "processing", "in delivery", "delivered"],
       default: "registered",
     },
   },

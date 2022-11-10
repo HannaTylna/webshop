@@ -1,5 +1,5 @@
 import { Product } from "@webshop/shared"
-import React, { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Button, Card, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { useCart } from "../context/CartContext"
@@ -21,8 +21,10 @@ const ProductRow = (props: { product: Product }) => {
   const quantity = getItemQuantity(id)
 
   useEffect(() => {
-    getCurrentUser()
-    fetchCart()
+    if (!errorMessage) {
+      getCurrentUser()
+      fetchCart()
+    }
     // eslint-disable-next-line
   }, [])
 

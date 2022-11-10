@@ -1,11 +1,13 @@
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import Form from "react-bootstrap/Form"
 
 export default function SignupPage() {
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [email, setEmail] = useState<string>("")
+  const [role, setRole] = useState<string>("")
   const [warning, setWarning] = useState<string>("")
 
   const navigate = useNavigate()
@@ -18,6 +20,7 @@ export default function SignupPage() {
       username,
       email,
       password,
+      role,
     })
     if (signupResponse && signupResponse.status === 200) {
       navigate("/signin")
@@ -71,6 +74,22 @@ export default function SignupPage() {
                     <label className="form-label" htmlFor="password">
                       Password
                     </label>
+                  </div>
+                  <div className="form-outline form-white mb-4">
+                    <Form.Check
+                      type="checkbox"
+                      id="user"
+                      label={"User"}
+                      checked={role === "user"}
+                      onChange={() => setRole("user")}
+                    />
+                    <Form.Check
+                      type="checkbox"
+                      id="admin"
+                      label={"Admin"}
+                      checked={role === "admin"}
+                      onChange={() => setRole("admin")}
+                    />
                   </div>
                   <button
                     className="btn btn-primary btn-lg px-5"
