@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Button, Col, Form, Row, Table } from "react-bootstrap"
+import { Form, Table } from "react-bootstrap"
 
 export default function OrderUpdateComponent(props: any) {
   const [user, setUser] = useState<string>("")
@@ -21,15 +21,15 @@ export default function OrderUpdateComponent(props: any) {
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleOnClick = async () => {
     try {
-      await axios.patch(`api/admin/update/${props.id}`, {
+      await axios.post(`api/admin/update/${props.id}`, {
         status: updatedStatus,
       })
     } catch (error) {
       console.log(error)
     }
+    window.location.reload()
   }
 
   useEffect(() => {
@@ -57,32 +57,48 @@ export default function OrderUpdateComponent(props: any) {
           </tr>
           <tr>
             <td className="text-center text-uppercase">Status</td>
-            <td>{updatedStatus ? updatedStatus : status}</td>
+            <td>{status}</td>
           </tr>
         </tbody>
       </Table>
 
-      <Form className="mb-5" onSubmit={handleSubmit}>
-        <div className="form-outline form-white mb-4">
-          <Form.Check
-            type="checkbox"
-            id="registered"
-            label={"Registered"}
-            checked={status === "registered"}
-            onChange={() => setStatus("registered")}
-          />
-          <Form.Check
-            type="checkbox"
-            id="processing"
-            label={"Processing"}
-            checked={status === "processing"}
-            onChange={() => setStatus("processing")}
-          />
-        </div>
-        <button className="btn btn-primary btn-lg px-5" type="submit">
-          Change status
-        </button>
-      </Form>
+      <div className="form-outline form-white mb-4">
+        <Form.Check
+          type="checkbox"
+          id="registered"
+          label={"Registered"}
+          checked={updatedStatus === "registered"}
+          onChange={() => setUpdatedStatus("registered")}
+        />
+        <Form.Check
+          type="checkbox"
+          id="processing"
+          label={"Processing"}
+          checked={updatedStatus === "processing"}
+          onChange={() => setUpdatedStatus("processing")}
+        />
+        <Form.Check
+          type="checkbox"
+          id="inDelivery"
+          label={"In delivery"}
+          checked={updatedStatus === "in delivery"}
+          onChange={() => setUpdatedStatus("in delivery")}
+        />
+        <Form.Check
+          type="checkbox"
+          id="delivered"
+          label={"Delivered"}
+          checked={updatedStatus === "delivered"}
+          onChange={() => setUpdatedStatus("delivered")}
+        />
+      </div>
+      <button
+        className="btn btn-primary btn-lg px-5"
+        type="submit"
+        onClick={handleOnClick}
+      >
+        Change status
+      </button>
     </>
   )
 }
