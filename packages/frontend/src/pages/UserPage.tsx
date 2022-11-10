@@ -14,7 +14,7 @@ export default function UserPage() {
   const [userEmail, setUserEmail] = useState<string>("")
   const [userPhoneNumber, setUserPhoneNumber] = useState<string>("")
   const [userDeliveryAddress, setUserDeliveryAddress] = useState<string>("")
-  const [isAdmin, setIsAdmin] = useState<string>("")
+  const [role, setRole] = useState<string>("")
 
   const getCurrentUser = async () => {
     try {
@@ -24,7 +24,7 @@ export default function UserPage() {
       setUserEmail(response.data.email)
       setUserPhoneNumber(response.data.phoneNumber)
       setUserDeliveryAddress(response.data.deliveryAddress)
-      setIsAdmin(response.data.role)
+      setRole(response.data.role)
       console.log(response)
     } catch (error) {
       console.log(error)
@@ -54,7 +54,7 @@ export default function UserPage() {
 
   return (
     <>
-      {isAdmin !== "admin" ? "" : <AdminComponent />}
+      {role !== "admin" ? "" : <AdminComponent />}
       <h1 className="text-center">User profile</h1>
       <Row>
         <Col sm={5} className="text-center">
