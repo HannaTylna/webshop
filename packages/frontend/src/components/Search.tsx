@@ -49,7 +49,9 @@ export default function Search() {
                 <Modal.Body>
                   <Link to={`/products/${product._id}`}>
                     <img
-                      src={Object.values(product?.images)[1].small}
+                      src={`data:image/jpg;base64,${
+                        Object.values(product?.images)[0]
+                      }`}
                       style={{
                         width: "200px",
                         height: "200px",
