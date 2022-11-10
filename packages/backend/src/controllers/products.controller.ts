@@ -44,15 +44,13 @@ export const loadProductsbyCategory = async (req: Request, res: Response) => {
 
 export const addProduct = async (req: Request, res: Response) => {
   try {
-    const pathIMG = path.join(`${__dirname}/../../uploads/${req.file?.filename}`)
-    const src = {
-      large: pathIMG,
-      small: pathIMG,
+    const obj = {
+      img: {
+          data: fs.readFileSync(path.join(`${__dirname}../../../uploads/${req.file?.filename}`)),
+          contentType: "image/png"
+      }
     }
-    req.body.images = {
-      alt: req.file?.filename,
-      src: src
-    }
+    req.body.images = obj.img
     res.status(200).json(await createItem(req.body))
   } catch (error) {
     res.status(200).json(error)

@@ -13,7 +13,7 @@ import { Product } from "@webshop/shared"
 
 const productSchema = new Schema({
   // images: { type: Object, required: false },
-  images: { type: Object, required: false },
+  images: { data: Buffer, contentType: String },
   title: { type: String, required: true, unique: true },
   description: { type: String, required: true },
   categories: [{ type: String, required: true }],
