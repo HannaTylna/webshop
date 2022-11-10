@@ -40,7 +40,7 @@ const Cart = ({ isOpen }: CartProps) => {
             <Button
               className="w-100"
               onClick={() => {
-                buyProducts(address)
+                buyProducts(address ? address : deliveryAddress)
               }}
             >
               Buy
