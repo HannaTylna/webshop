@@ -1,5 +1,5 @@
 import { Product } from "@webshop/shared"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Card, Col } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import { useCart } from "../context/CartContext"
@@ -8,7 +8,7 @@ const ProductRow = (props: { product: Product }) => {
   const { title, price, images, _id } = props.product
   const id = _id || ""
   const values = Object.values(images)
-  const imageURL = values[1].large
+  const imageURL = values[0]
   const {
     getItemQuantity,
     increaseCartQuantity,
@@ -32,7 +32,7 @@ const ProductRow = (props: { product: Product }) => {
         <Link to={`/products/${_id}`}>
           <Card.Img
             variant="top"
-            src={imageURL}
+            src={`data:image/jpg;base64,${imageURL}`}
             height="200px"
             style={{ objectFit: "cover" }}
           />
