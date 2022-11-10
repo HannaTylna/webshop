@@ -11,11 +11,11 @@ export default function AddProductsPage() {
   const [weight, setWeight]= useState<string>('')
   const [price, setPrice]= useState<string>('')
   const [manufacturer, setManufacturer]= useState<string>('')
+  const [file, setFile]= useState<File | null>(null)
 
-  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault()
+  const handleOnSubmit = async () => {
     console.log('sended');
-    const response = await axios.post('api/admin/add',{
+    const response = await axios.post('/api/admin/add',{
       title: title,
       description: description,
       categories: categories,
@@ -35,6 +35,13 @@ export default function AddProductsPage() {
         </Col>
         <Col sm={7}>
           <Form className="mt-5" onSubmit={handleOnSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicFirstName">
+              <Form.Label>Title:</Form.Label>
+              <Form.Control
+                type="file"
+                onChange={e=> setFile(e.target.files[0])}
+              />
+            </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>Title:</Form.Label>
               <Form.Control
