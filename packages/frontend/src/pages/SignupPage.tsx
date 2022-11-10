@@ -22,7 +22,6 @@ export default function SignupPage() {
       password,
       role,
     })
-    console.log(signupResponse)
     if (signupResponse && signupResponse.status === 200) {
       navigate("/signin")
     }
