@@ -7,7 +7,26 @@ import { useParams } from "react-router-dom"
 export default function ProductPage() {
   const [product, setProduct] = useState<Product>()
   const [error, setError] = useState<string>("")
+  const [role, setRole] = useState<string>("")
   const params = useParams()
+
+  const getUserRole = async () => {
+    try {
+      const response = await axios.get("/api/user/info")
+      setRole(response.data.role)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getUserRole()
+  }, [])
+
+  const getProduct = async (): Promise<Product> => {
+    const response = await axios.get<Product>(`/api/products/${params.id}`)
+    return response.data
+  }
 
   useEffect(() => {
     getProduct()
@@ -17,10 +36,6 @@ export default function ProductPage() {
       })
     // eslint-disable-next-line
   }, [])
-  const getProduct = async (): Promise<Product> => {
-    const response = await axios.get<Product>(`/api/products/${params.id}`)
-    return response.data
-  }
 
   return (
     <>
@@ -41,20 +56,41 @@ export default function ProductPage() {
             xs={10}
             className="d-flex flex-column justify-content-center"
           >
-            <p className="fs-4">{product?.title}</p>
-            <p className="fs-6 mt-5">price: {product?.price} kr</p>
-            <p className="fs-6">description: {product?.description}</p>
-            <p className="fs-6">weight: {product?.weight}</p>
-            <p className="fs-6">manufacturer: {product?.manufacturer}</p>
+            <h3 className="fs-4 fw-bold text-uppercase mt-5 text-center">
+              {product?.title}
+            </h3>
+            <p className="fs-6 mt-5">
+              <span className="fw-bold text-uppercase">Price: </span>
+              {product?.price} kr
+            </p>
+            <p className="fs-6">
+              <span className="fw-bold text-uppercase">Description:</span>
+              {product?.description}
+            </p>
+            <p className="fs-6">
+              <span className="fw-bold text-uppercase">Weight: </span>
+              {product?.weight}
+            </p>
+            <p className="fs-6">
+              <span className="fw-bold text-uppercase">Manufacturer: </span>
+              {product?.manufacturer}
+            </p>
             <p>
-              categories:
+              <span className="fw-bold text-uppercase">Categories: </span>
               {product?.categories.map((category) => (
                 <span key={category.length}>{category}</span>
               ))}
             </p>
             <Button variant="primary" className="mt-auto mb-4">
-              add to cart
+              Add to cart
             </Button>
+            {role === "admin" ? (
+              <Button variant="primary" className="mt-auto mb-4">
+                Update product
+              </Button>
+            ) : (
+              ""
+            )}
           </Col>
         </Row>
       )}
