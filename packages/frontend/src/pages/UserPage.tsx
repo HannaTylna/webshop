@@ -25,7 +25,6 @@ export default function UserPage() {
       setUserPhoneNumber(response.data.phoneNumber)
       setUserDeliveryAddress(response.data.deliveryAddress)
       setRole(response.data.role)
-      console.log(response)
     } catch (error) {
       console.log(error)
     }
