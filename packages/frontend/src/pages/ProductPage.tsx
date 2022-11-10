@@ -21,13 +21,16 @@ export default function ProductPage() {
     const response = await axios.get<Product>(`/api/products/${params.id}`)
     return response.data
   }
-  console.log(product?.categories)
+
   return (
     <>
       {error && <p>{error}</p>}
       {product && (
         <Row>
-          <Col style={{height: 300}} className="d-flex justify-content-center">
+          <Col
+            style={{ height: 300 }}
+            className="d-flex justify-content-center"
+          >
             <img
               src={`data:image/jpg;base64,${Object.values(product?.images)[0]}`}
               alt={product?.title}
