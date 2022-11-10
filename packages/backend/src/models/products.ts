@@ -1,19 +1,8 @@
 import { model, Schema } from "mongoose"
 import { Product } from "@webshop/shared"
 
-// const srcSchema = new Schema({
-//   large: {type: String},
-//   small:{type: String}
-// })
-
-// const imagesSchema = new Schema({
-//   alt: {type: String},
-//   src: srcSchema
-// })
-
 const productSchema = new Schema({
-  // images: { type: Object, required: false },
-  images: { data: Buffer, contentType: String },
+  images: { type: Object, required: false },
   title: { type: String, required: true, unique: true },
   description: { type: String, required: true },
   categories: [{ type: String, required: true }],
