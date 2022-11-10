@@ -85,7 +85,11 @@ export default function ProductPage() {
               Add to cart
             </Button>
             {role === "admin" ? (
-              <Button variant="primary" className="mt-auto mb-4">
+              <Button
+                variant="primary"
+                className="mt-auto mb-4"
+                href={`/update/${product._id}`}
+              >
                 Update product
               </Button>
             ) : (
