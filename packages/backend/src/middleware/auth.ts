@@ -3,8 +3,6 @@ import { Request, Response, NextFunction } from "express"
 
 import { config } from "../config/auth"
 
-const tokenList = new Map<string, JwtPayload>()
-
 export type JwtPayload = {
   username: string | undefined
   userid: string | undefined
