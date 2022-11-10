@@ -1,46 +1,51 @@
-import { useState } from 'react'
+import { useState } from "react"
 import Form from "react-bootstrap/Form"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import axios from "axios"
 export default function AddProductsPage() {
-  const [title, setTitle]= useState<string>('')
-  const [description, setDescription]= useState<string>('')
-  const [categories, setCategories]= useState<string>('')
-  const [weight, setWeight]= useState<string>('')
-  const [price, setPrice]= useState<string>('')
-  const [manufacturer, setManufacturer]= useState<string>('')
-  const [file, setFile]= useState<File | null>(null)
+  const [title, setTitle] = useState<string>("")
+  const [description, setDescription] = useState<string>("")
+  const [categories, setCategories] = useState<string>("")
+  const [weight, setWeight] = useState<string>("")
+  const [price, setPrice] = useState<string>("")
+  const [manufacturer, setManufacturer] = useState<string>("")
+  const [file, setFile] = useState<File | null>(null)
 
-  const handleOnSubmit = async () => {
-    console.log('sended');
-    const response = await axios.post('/api/admin/add',{
+  const handleChange = (e: any) => {
+    setFile(e.target.files[0])
+  }
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log("sended")
+    const formData: any | null = new FormData()
+    formData.append("file", file)
+    console.log(file!.name)
+    // formData.append("fileName", file!.name)
+
+    const response = await axios.post("/api/admin/add", {
       title: title,
       description: description,
       categories: categories,
       weight: weight,
       price: price,
-      manufacturer: manufacturer
+      manufacturer: manufacturer,
+      images: formData,
     })
-    console.log(response);
-    
+    console.log(response.data)
   }
 
   return (
     <>
-    <h1 className="text-center">Create a new item</h1>
+      <h1 className="text-center">Create a new item</h1>
       <Row>
-        <Col sm={5} className="text-center">
-        </Col>
+        <Col sm={5} className="text-center"></Col>
         <Col sm={7}>
           <Form className="mt-5" onSubmit={handleOnSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicFirstName">
-              <Form.Label>Title:</Form.Label>
-              <Form.Control
-                type="file"
-                onChange={e=> setFile(e.target.files[0])}
-              />
+            <Form.Group className="mb-3" controlId="formBasicFirstName">
+              <Form.Label>File:</Form.Label>
+              <Form.Control type="file" onChange={handleChange} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label>Title:</Form.Label>
