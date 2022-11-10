@@ -6,7 +6,6 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import axios from "axios"
 import OrderComponent from "../components/OrderComponent"
-import OrdersPage from "./OrdersPage"
 
 export default function UserPage() {
   const [userFirstName, setUserFirstName] = useState<string>("")
