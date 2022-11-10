@@ -97,3 +97,18 @@ export const registeredOrders = async (
     res.status(400).json(error)
   }
 }
+
+export const updateOrderStatus = async (req: Request, res: Response) => {
+  try {
+    const orderId = req.params.id
+    const { status } = req.body
+    const updateStatus = await OrderModel.findOneAndUpdate(
+      { _id: orderId },
+      { status: status },
+      { returnDocument: "after" }
+    )
+    res.status(200).json(updateStatus)
+  } catch (error) {
+    res.status(400).json(error)
+  }
+}
