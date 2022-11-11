@@ -13,6 +13,7 @@ import AddProductsPage from "./pages/AddProductsPage"
 import OrdersPage from "./pages/OrdersPage"
 import NotFound from "./pages/NotFound"
 import OrderUpdatePage from "./pages/OrderUpdatePage"
+import ProductUpdatePage from "./pages/ProductUpdatePage"
 
 axios.defaults.baseURL =
   process.env.REACT_APP_WEBSHOP_API || "http://localhost:4000"
@@ -75,6 +76,13 @@ function App() {
             </>
           ) : (
             <Route path="/add/products" element={<NotFound />} />
+          )}
+          {role === "admin" ? (
+            <>
+              <Route path="/update/:id" element={<ProductUpdatePage />} />
+            </>
+          ) : (
+            <Route path="/update/:id" element={<NotFound />} />
           )}
         </Routes>
       </Container>

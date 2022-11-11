@@ -18,22 +18,22 @@ export default function AddProductsPage() {
   }
   const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const response = await axios.post("/api/admin/add", {
-      title: title,
-      description: description,
-      categories: categories,
-      weight: weight,
-      price: price,
-      manufacturer: manufacturer,
-      images: file,
-    },
-	{
-		headers: { "Content-Type": "multipart/form-data" },
-	}
-	)
-    console.log(response.data)
+    await axios.post(
+      "/api/admin/add",
+      {
+        title: title,
+        description: description,
+        categories: categories,
+        weight: weight,
+        price: price,
+        manufacturer: manufacturer,
+        images: file,
+      },
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    )
   }
-console.log(file);
 
   return (
     <>
