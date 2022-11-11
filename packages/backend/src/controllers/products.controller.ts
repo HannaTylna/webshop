@@ -46,7 +46,7 @@ export const addProduct = async (req: Request, res: Response) => {
   try {
     const obj = {
       img: {
-          data: fs.readFileSync(path.join(`${__dirname}../../../uploads/${req.file?.filename}`)),
+          data: fs.readFileSync(path.join(`./uploads/${req.file?.filename}`)),
           contentType: "image/png"
       }
     }
@@ -61,7 +61,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   try {
     const obj = {
       img: {
-          data: fs.readFileSync(path.join(`${__dirname}../../../uploads/${req.file?.filename}`)),
+          data: fs.readFileSync(path.join(`./uploads/${req.file?.filename}`)),
           contentType: "image/png"
       }
     }
