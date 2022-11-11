@@ -20,6 +20,9 @@ services:
     image: mongo:${MONGO_VERSION}
     ports:
       - "27017:27017"
-    container_name: ${MONGO_DB_CONTAINER_NAME}
+    container_name: db_webshop
     volumes:
-      - /data/${MONGO_DB_CONTAINER_NAME}
+      - /data/db_webshop
+      - ./initdb.js:/docker-entrypoint-initdb.d/initdb.js
+    environment:
+      - MONGO_INITDB_DATABASE=webshop
