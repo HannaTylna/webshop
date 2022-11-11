@@ -9,6 +9,7 @@ export default function ProductUpdateComponent(props: any) {
   const [updatedWeight, setUpdatedWeight] = useState<string>("")
   const [updatedPrice, setUpdatedPrice] = useState<string>("")
   const [updatedManufacturer, setUpdatedManufacturer] = useState<string>("")
+  const [file, setFile] = useState<any>()
   const [updatedFile, setUpdatedFile] = useState<File | null>(null)
 
   const getCurrentProduct = async () => {
@@ -20,15 +21,15 @@ export default function ProductUpdateComponent(props: any) {
       setUpdatedWeight(response.data.weight)
       setUpdatedPrice(response.data.price)
       setUpdatedManufacturer(response.data.manufacturer)
-      setUpdatedFile(response.data)
+      setFile(response.data)    
     } catch (error) {
       console.log(error)
     }
   }
 
-  //   const handleChange = (e: any) => {
-  //     setUpdatedFile(e.target.files[0])
-  //   }
+    const handleChange = (e: any) => {
+      setUpdatedFile(e.target.files[0])
+    }
   const handleOnUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     await axios.patch(
@@ -40,11 +41,11 @@ export default function ProductUpdateComponent(props: any) {
         weight: updatedWeight,
         price: updatedPrice,
         manufacturer: updatedManufacturer,
-        // images: updatedFile,
+        images: updatedFile,
+      },
+      {
+        headers: { "Content-Type": "multipart/form-data" },
       }
-      //   {
-      //     headers: { "Content-Type": "multipart/form-data" },
-      //   }
     )
   }
 
@@ -58,19 +59,19 @@ export default function ProductUpdateComponent(props: any) {
       <h1 className="text-center">Update product {updatedTitle}</h1>
       <Row>
         <Col sm={5} className="text-center">
-          {/* <img
-            src={`data:image/jpg;base64,${Object.values(updatedFile)[0]}`}
+          <img
+            src={`data:image/jpg;base64,${file?.images.data}`}
             alt="profile avatar"
             height={250}
             width={250}
-          /> */}
+          />
         </Col>
         <Col sm={7}>
           <Form className="mt-5" onSubmit={handleOnUpdate}>
-            {/* <Form.Group className="mb-3" controlId="formBasicFirstName">
+            <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label  className="fw-bold">File:</Form.Label>
               <Form.Control type="file" onChange={handleChange} />
-            </Form.Group> */}
+            </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicFirstName">
               <Form.Label className="fw-bold">Title:</Form.Label>
               <Form.Control
