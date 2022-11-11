@@ -59,6 +59,13 @@ export const addProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
   try {
+    const obj = {
+      img: {
+          data: fs.readFileSync(path.join(`${__dirname}../../../uploads/${req.file?.filename}`)),
+          contentType: "image/png"
+      }
+    }
+    req.body.images = obj.img
     res.status(200).json(await updateItem(req.params.id, req.body))
   } catch (error) {
     res.status(200).json(error)
