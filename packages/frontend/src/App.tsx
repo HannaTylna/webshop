@@ -32,8 +32,10 @@ function App() {
   const [role, setRole] = useState<string>("")
   const getCurrentUser = async () => {
     try {
-      const response = await axios.get("/api/user/info")
-      setRole(response.data.role)
+      if(localStorage.getItem("webshop")){
+        const response = await axios.get("/api/user/info")
+        setRole(response.data.role)
+      }
     } catch (error) {
       console.log(error)
     }
